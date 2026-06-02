@@ -47,7 +47,7 @@
     width: 0%;
     background: linear-gradient(90deg, var(--red), var(--gold));
     z-index: 200;
-    transition: width 0.08s linear;
+    transition: width 0.14s ease-out;
     box-shadow: 0 0 12px rgba(212,43,43,0.5);
   }
 
@@ -344,8 +344,8 @@
   .reveal {
     opacity: 0;
     transform: translateY(28px);
-    transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .reveal.visible {
@@ -356,8 +356,8 @@
   .reveal-left {
     opacity: 0;
     transform: translateX(-32px);
-    transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .reveal-left.visible { opacity: 1; transform: translateX(0); }
@@ -365,7 +365,7 @@
   .reveal-scale {
     opacity: 0;
     transform: scale(0.94);
-    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 0.95s ease, transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .reveal-scale.visible { opacity: 1; transform: scale(1); }
@@ -378,16 +378,16 @@
   .stagger-children > * {
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .stagger-children > *:nth-child(1) { transition-delay: 0.05s; }
-  .stagger-children > *:nth-child(2) { transition-delay: 0.12s; }
-  .stagger-children > *:nth-child(3) { transition-delay: 0.19s; }
-  .stagger-children > *:nth-child(4) { transition-delay: 0.26s; }
-  .stagger-children > *:nth-child(5) { transition-delay: 0.33s; }
-  .stagger-children > *:nth-child(6) { transition-delay: 0.4s; }
+  .stagger-children > *:nth-child(1) { transition-delay: 0.08s; }
+  .stagger-children > *:nth-child(2) { transition-delay: 0.17s; }
+  .stagger-children > *:nth-child(3) { transition-delay: 0.26s; }
+  .stagger-children > *:nth-child(4) { transition-delay: 0.35s; }
+  .stagger-children > *:nth-child(5) { transition-delay: 0.44s; }
+  .stagger-children > *:nth-child(6) { transition-delay: 0.53s; }
 
   /* ── STORY ── */
   .story-section {
@@ -531,7 +531,7 @@
       radial-gradient(ellipse 80% 60% at 20% 80%, rgba(212,43,43,0.2) 0%, transparent 70%),
       linear-gradient(135deg, rgba(26,26,26,0.6), rgba(26,26,26,0.25)),
       url("assets/hero-poster.jpg") center/cover no-repeat;
-    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s;
+    transition: transform 0.95s cubic-bezier(0.22, 1, 0.36, 1), filter 0.95s;
     transform: scale(1.06);
     filter: saturate(1.1);
   }
@@ -553,7 +553,7 @@
     z-index: 2;
     padding: 42px 40px 34px;
     max-width: 670px;
-    transition: opacity 0.28s ease, transform 0.28s ease;
+    transition: opacity 0.46s ease, transform 0.46s ease;
   }
 
   .story-stage.is-swapping .story-stage-content {
@@ -626,7 +626,7 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.32s ease;
   }
 
   .story-year-chip.is-active,
@@ -661,7 +661,7 @@
     width: 20%;
     height: 100%;
     background: linear-gradient(90deg, var(--red), var(--gold));
-    transition: width 0.35s ease;
+    transition: width 0.62s ease;
   }
 
   .story-track-controls {
@@ -682,7 +682,7 @@
     font-size: 20px;
     line-height: 1;
     cursor: pointer;
-    transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.2s;
+    transition: border-color 0.3s, background 0.3s, color 0.3s, transform 0.3s;
   }
 
   .story-track-btn:hover:not(:disabled) {
@@ -842,7 +842,7 @@
     width: 16.66%;
     height: 100%;
     background: linear-gradient(90deg, var(--red), var(--gold));
-    transition: width 0.35s ease;
+    transition: width 0.62s ease;
   }
 
   .values-scenes {
@@ -858,7 +858,7 @@
     border-radius: 16px;
     overflow: hidden;
     padding: 30px 26px 24px;
-    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    transition: border-color 0.42s, transform 0.42s, box-shadow 0.42s;
   }
 
   .value-scene::before {
@@ -871,7 +871,7 @@
     background: linear-gradient(90deg, var(--red), var(--gold));
     transform: scaleX(0.22);
     transform-origin: left;
-    transition: transform 0.35s ease;
+    transition: transform 0.48s ease;
   }
 
   .value-scene.is-active {
@@ -896,7 +896,7 @@
     line-height: 1;
     color: transparent;
     -webkit-text-stroke: 1px rgba(212,43,43,0.4);
-    transition: color 0.3s, -webkit-text-stroke 0.3s;
+    transition: color 0.45s, -webkit-text-stroke 0.45s;
   }
 
   .value-scene.is-active .value-scene-index {
@@ -1220,13 +1220,13 @@
     <span class="story-marquee-item">BBQ-K Doncaster</span>
     <span class="story-marquee-item"><strong>BBQ-K Endeavour Hill</strong></span>
     <span class="story-marquee-item">BBQ-K Box Hill</span>
-    <span class="story-marquee-item"><strong>BBQ-K Glen Waverley</strong></span>
+    <span class="story-marquee-item"><strong>BBQ-K Brimbank</strong></span>
     <span class="story-marquee-item">3 AYCE · 2 A la Carte</span>
     <span class="story-marquee-item"><strong>BBQ-K Springvale</strong></span>
     <span class="story-marquee-item">BBQ-K Doncaster</span>
     <span class="story-marquee-item"><strong>BBQ-K Endeavour Hill</strong></span>
     <span class="story-marquee-item">BBQ-K Box Hill</span>
-    <span class="story-marquee-item"><strong>BBQ-K Glen Waverley</strong></span>
+    <span class="story-marquee-item"><strong>BBQ-K Brimbank</strong></span>
     <span class="story-marquee-item">3 AYCE · 2 A la Carte</span>
   </div>
 </div>
@@ -1287,7 +1287,7 @@
               <button class="story-year-chip" type="button" data-story-target="1">Doncaster</button>
               <button class="story-year-chip" type="button" data-story-target="2">Endeavour Hill</button>
               <button class="story-year-chip" type="button" data-story-target="3">Box Hill</button>
-              <button class="story-year-chip" type="button" data-story-target="4">Glen Waverley</button>
+              <button class="story-year-chip" type="button" data-story-target="4">Brimbank</button>
             </div>
             <div class="story-progress">
               <p class="story-progress-label" id="storyProgressLabel">Location 01</p>
@@ -1483,7 +1483,7 @@
       scrollProgress.style.width = (y / docH) * 100 + '%';
     }
     if (heroVideo && !prefersReducedMotion) {
-      heroVideo.style.transform = `scale(1.08) translateY(${y * 0.18}px)`;
+      heroVideo.style.transform = `scale(1.08) translateY(${y * 0.1}px)`;
     }
   }
 
@@ -1615,13 +1615,13 @@
         tint: 'rgba(245,166,35,0.22)'
       },
       {
-        location: 'Glen Waverley',
+        location: 'Brimbank',
         chapter: 'Location 05',
         mode: 'AYCE',
-        title: 'BBQ-K Glen Waverley',
-        text: 'Our AYCE Glen Waverley branch brings high-energy service, full menu rounds, and late-night BBQ comfort to the east side.',
+        title: 'BBQ-K Brimbank',
+        text: 'Our AYCE Brimbank branch brings high-energy service, full menu rounds, and late-night BBQ comfort to the west side.',
         tag: 'All You Can Eat · East Side Favourite',
-        imageBase: 'glen-waverley',
+        imageBase: 'brimbank',
         focus: 'center 42%',
         tint: 'rgba(212,43,43,0.24)'
       }
@@ -1641,7 +1641,7 @@
       const chapter = chapters[activeIndex];
       storyStage.classList.add('is-swapping');
       if (swapTimer) clearTimeout(swapTimer);
-      swapTimer = setTimeout(() => storyStage.classList.remove('is-swapping'), 220);
+      swapTimer = setTimeout(() => storyStage.classList.remove('is-swapping'), 480);
 
       if (storyStageKicker) storyStageKicker.textContent = `${chapter.chapter} · ${chapter.mode}`;
       if (storyStageTitle) storyStageTitle.textContent = chapter.title;
