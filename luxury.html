@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BBQ-K — Luxury Seoul Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ink:#1C1712;--ink2:#2E2820;
+  --cream:#F7F2EB;--cream2:#EDE6D9;--cream3:#E2D8C8;
+  --gold:#B8922A;--gold2:#D4A84B;
+  --red:#8B2020;--red2:#C23030;
+  --stone:#6B6158;--stone2:#9A8F83;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:72px;background:transparent;transition:background 0.35s,border-color 0.35s;border-bottom:1px solid transparent;}
+nav.scrolled{background:rgba(247,242,235,0.95);backdrop-filter:blur(12px);border-bottom-color:var(--cream3);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;letter-spacing:6px;text-transform:uppercase;color:var(--ink);text-decoration:none;}
+.nav-logo em{font-style:italic;color:var(--red);}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--stone);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--ink);}
+.nav-cta{font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--red);text-decoration:none;border-bottom:1px solid var(--red);padding-bottom:1px;}
+
+/* VIDEO HERO */
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;padding-top:72px;}
+.hero-left{padding:80px 56px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--cream3);position:relative;z-index:2;background:rgba(247,242,235,0.85);backdrop-filter:blur(8px);}
+.hero-right{position:relative;overflow:hidden;background:var(--ink);}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(to left,rgba(28,23,18,0.15) 0%,rgba(28,23,18,0.45) 100%);z-index:1;}
+.hero-video-caption{position:absolute;bottom:32px;right:32px;z-index:2;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.5);}
+
+.hero-eyebrow{font-size:10px;font-weight:500;letter-spacing:5px;text-transform:uppercase;color:var(--stone2);margin-bottom:32px;animation:fadeIn 1s ease both;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,7vw,96px);font-weight:300;line-height:0.95;color:var(--ink);margin-bottom:32px;animation:fadeIn 1s 0.15s ease both;}
+.hero-title em{font-style:italic;color:var(--red);}
+.hero-title .small{font-size:0.38em;font-weight:600;letter-spacing:8px;text-transform:uppercase;display:block;color:var(--gold);font-style:normal;margin-top:12px;}
+.hero-divider{width:40px;height:1px;background:var(--gold);margin-bottom:32px;animation:fadeIn 1s 0.3s ease both;}
+.hero-body{font-size:15px;line-height:1.85;color:var(--stone);max-width:380px;margin-bottom:40px;animation:fadeIn 1s 0.4s ease both;}
+.hero-body strong{color:var(--ink);font-weight:500;}
+.hero-stats{display:flex;gap:40px;animation:fadeIn 1s 0.5s ease both;}
+.stat{display:flex;flex-direction:column;gap:4px;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--ink);}
+.stat-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--stone2);}
+.hero-actions{display:flex;gap:16px;margin-top:40px;animation:fadeIn 1s 0.55s ease both;}
+.btn-gold{font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--cream);background:var(--ink);padding:14px 28px;text-decoration:none;transition:background 0.2s;}
+.btn-gold:hover{background:var(--red);}
+.btn-line{font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--ink);border-bottom:1px solid var(--ink);padding-bottom:2px;text-decoration:none;transition:color 0.2s,border-color 0.2s;}
+.btn-line:hover{color:var(--red);border-color:var(--red);}
+
+.tagline-strip{background:var(--ink);padding:16px 0;overflow:hidden;white-space:nowrap;}
+.tagline-inner{display:inline-flex;animation:ticker 25s linear infinite;}
+.tagline-item{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:300;font-style:italic;color:var(--cream2);padding:0 32px;}
+.tagline-dot{color:var(--gold);padding:0 8px;}
+
+/* STORY */
+.story-section{padding:96px 56px;background:var(--cream2);}
+.story-inner{max-width:1100px;margin:0 auto;}
+.story-header{margin-bottom:64px;}
+.section-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--stone2);margin-bottom:12px;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4vw,52px);font-weight:300;line-height:1.15;color:var(--ink);}
+.section-title em{font-style:italic;color:var(--red);}
+.section-desc{font-size:14px;line-height:1.8;color:var(--stone);max-width:520px;margin-top:16px;}
+
+.story-layout{display:grid;grid-template-columns:280px 1fr;gap:64px;align-items:start;}
+.story-intro{padding-top:8px;border-top:1px solid var(--cream3);}
+.story-intro p{font-size:14px;line-height:1.85;color:var(--stone);margin-bottom:20px;}
+.story-intro .highlight{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;font-style:italic;color:var(--red);line-height:1.3;margin:24px 0;}
+
+.story-timeline{display:flex;flex-direction:column;gap:0;}
+.timeline-row{display:grid;grid-template-columns:80px 1fr;padding:32px 0;border-bottom:1px solid var(--cream3);transition:background 0.3s;}
+.timeline-row:hover{background:rgba(255,255,255,0.4);padding-left:16px;padding-right:16px;margin-left:-16px;margin-right:-16px;}
+.timeline-year{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--gold);line-height:1;}
+.timeline-content h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--ink);margin-bottom:8px;}
+.timeline-content p{font-size:14px;line-height:1.75;color:var(--stone);max-width:560px;}
+
+/* VALUES */
+.values-section{padding:96px 56px;background:var(--cream);}
+.values-inner{max-width:1100px;margin:0 auto;}
+.values-header{text-align:center;margin-bottom:64px;}
+.values-header .section-desc{margin:16px auto 0;}
+
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--cream3);}
+.value-card{background:var(--cream);padding:44px 36px;transition:background 0.35s;}
+.value-card:hover{background:var(--ink);}
+.value-card:hover .value-num,.value-card:hover h3,.value-card:hover p{color:rgba(255,255,255,0.85);}
+.value-card:hover .value-num{color:rgba(255,255,255,0.12);}
+.value-num{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:var(--cream3);line-height:1;margin-bottom:8px;transition:color 0.35s;}
+.value-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--ink);margin-bottom:12px;transition:color 0.35s;}
+.value-card p{font-size:13px;line-height:1.75;color:var(--stone);transition:color 0.35s;}
+
+/* FOOD */
+.food-section{padding:80px 56px;background:var(--cream);}
+.section-header{display:flex;align-items:baseline;gap:24px;margin-bottom:48px;}
+.section-num{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:var(--cream3);line-height:1;}
+.food-track{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;cursor:grab;margin:0 -56px;padding:0 56px;}
+.food-track::-webkit-scrollbar{display:none;}
+.food-card{flex:0 0 200px;}
+.food-img-box{height:260px;background:var(--cream2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;transition:background 0.3s;}
+.food-card:hover .food-img-box{background:var(--cream3);}
+.food-img-box span{font-size:36px;opacity:0.5;}
+.food-img-box small{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--stone2);}
+.food-card-info{padding:16px 4px 8px;border-top:1px solid var(--cream3);}
+.food-card-info h4{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;}
+.food-card-info p{font-size:11px;color:var(--stone2);margin-top:2px;}
+
+/* CHOOSE */
+.choose-section{padding:80px 56px;background:var(--cream2);}
+.choose-inner{max-width:1100px;margin:0 auto;}
+.choose-intro{margin-bottom:64px;}
+.choose-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.choice-card{background:var(--cream);padding:48px 44px;text-decoration:none;display:block;position:relative;overflow:hidden;transition:background 0.3s;}
+.choice-card:hover{background:var(--ink);}
+.choice-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
+.choice-card:hover::after{transform:scaleX(1);}
+.choice-num{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:var(--cream3);line-height:1;margin-bottom:-16px;transition:color 0.3s;}
+.choice-card:hover .choice-num{color:rgba(255,255,255,0.08);}
+.choice-tag{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--stone2);margin-bottom:16px;display:block;transition:color 0.3s;}
+.choice-card:hover .choice-tag{color:rgba(255,255,255,0.4);}
+.choice-name{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,42px);font-weight:400;line-height:1.1;margin-bottom:20px;transition:color 0.3s;}
+.choice-card:hover .choice-name{color:var(--cream);}
+.choice-desc{font-size:14px;line-height:1.75;color:var(--stone);max-width:300px;margin-bottom:36px;transition:color 0.3s;}
+.choice-card:hover .choice-desc{color:rgba(255,255,255,0.5);}
+.choice-link{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);border-bottom:1px solid currentColor;padding-bottom:2px;transition:color 0.3s;}
+.choice-card:hover .choice-link{color:var(--gold2);}
+.choice-branches-count{position:absolute;top:44px;right:44px;font-family:'Cormorant Garamond',serif;font-size:13px;font-style:italic;color:var(--stone2);transition:color 0.3s;}
+.choice-card:hover .choice-branches-count{color:rgba(255,255,255,0.3);}
+
+.info-bar{background:var(--ink2);padding:24px 56px;display:flex;align-items:center;gap:48px;flex-wrap:wrap;}
+.info-item{display:flex;flex-direction:column;gap:3px;}
+.info-item span{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.info-item p{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--cream2);}
+.info-divider{width:1px;height:40px;background:rgba(255,255,255,0.1);}
+
+footer{background:var(--ink);padding:48px 56px;display:flex;align-items:center;justify-content:space-between;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;letter-spacing:8px;text-transform:uppercase;color:var(--cream2);}
+.footer-logo em{font-style:italic;color:var(--gold);}
+footer p{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,0.25);}
+
+.reveal{opacity:0;transform:translateY(20px);transition:opacity 0.7s,transform 0.7s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;}
+  .hero-right{min-height:50vh;order:-1;}
+  .hero-left{background:rgba(247,242,235,0.95);}
+  .story-layout{grid-template-columns:1fr;gap:40px;}
+  .values-grid,.choose-grid{grid-template-columns:1fr;}
+  nav,.hero-left,.food-section,.story-section,.values-section,.choose-section{padding-left:24px;padding-right:24px;}
+  .food-track{margin:0 -24px;padding:0 24px;}
+  .nav-links{display:none;}
+  footer{flex-direction:column;gap:12px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">BBQ<em>-K</em></a>
+  <ul class="nav-links">
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#values">Values</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#experience">Dine</a></li>
+  </ul>
+  <a class="nav-cta" href="#experience">Reserve</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Authentic Korean Grill · Est. 2018 · 5 Locations</p>
+    <h1 class="hero-title">
+      The Art<br>of<br><em>Korean</em><br>
+      <span class="small">BBQ — K</span>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-body">
+      Where the tradition of <strong>Korean fire cooking</strong> meets refined modern dining.
+      From one grill to five Melbourne locations — united by smoke, quality, and the pleasure of the table.
+    </p>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">5</span><span class="stat-label">Locations</span></div>
+      <div class="stat"><span class="stat-num">2</span><span class="stat-label">Dining Styles</span></div>
+      <div class="stat"><span class="stat-num">∞</span><span class="stat-label">Flavour</span></div>
+    </div>
+    <div class="hero-actions">
+      <a class="btn-gold" href="#experience">Reserve a Table</a>
+      <a class="btn-line" href="#story">Discover Our Story</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
+      <source src="assets/hero-cinematic.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+    <span class="hero-video-caption">Cinematic · BBQ-K</span>
+  </div>
+</section>
+
+<div class="tagline-strip">
+  <div class="tagline-inner">
+    <span class="tagline-item">Est. 2018 <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Fire & Authenticity <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Galbi <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Samgyeopsal <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Bulgogi <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Quality Without Compromise <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">5 Melbourne Locations <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Est. 2018 <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Fire & Authenticity <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Galbi <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Samgyeopsal <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Bulgogi <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">Quality Without Compromise <span class="tagline-dot">·</span></span>
+    <span class="tagline-item">5 Melbourne Locations <span class="tagline-dot">·</span></span>
+  </div>
+</div>
+
+<section class="story-section" id="story">
+  <div class="story-inner">
+    <div class="story-header reveal">
+      <p class="section-label">Our Journey</p>
+      <h2 class="section-title">How BBQ-K <em>Evolved</em></h2>
+      <p class="section-desc">A story of deliberate growth — from one family's grill to five destinations, without ever losing what made the first flame special.</p>
+    </div>
+
+    <div class="story-layout reveal">
+      <div class="story-intro">
+        <p>BBQ-K was never built to be a chain. It was built to be a place where Korean BBQ is done properly — and that standard became the reason we grew.</p>
+        <p class="highlight">"The fire doesn't change. Only the table gets bigger."</p>
+        <p>Today, guests choose between the energy of All You Can Eat and the refinement of Order by Order — two experiences, one unwavering commitment to quality.</p>
+      </div>
+
+      <div class="story-timeline">
+        <div class="timeline-row">
+          <span class="timeline-year">2018</span>
+          <div class="timeline-content">
+            <h3>The First Flame</h3>
+            <p>BBQ-K opens with one location and one mission: authentic Korean BBQ over live fire — premium cuts, traditional marinades, and the warmth of shared dining.</p>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <span class="timeline-year">2020</span>
+          <div class="timeline-content">
+            <h3>A Community Forms</h3>
+            <p>Regulars return. Word spreads. The team refines every detail — from banchan prepared fresh daily to the rhythm of service around the grill.</p>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <span class="timeline-year">2022</span>
+          <div class="timeline-content">
+            <h3>All You Can Eat Arrives</h3>
+            <p>Two new locations launch the unlimited experience — rounds of meat, sides, and celebration. BBQ-K becomes the destination for group dinners and big nights.</p>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <span class="timeline-year">2023</span>
+          <div class="timeline-content">
+            <h3>The Refined Path</h3>
+            <p>Premium Order by Order locations open with curated set menus from AU$88 to AU$350 — for guests who savour choice, pacing, and precision.</p>
+          </div>
+        </div>
+        <div class="timeline-row">
+          <span class="timeline-year">2025</span>
+          <div class="timeline-content">
+            <h3>Five Locations, One Soul</h3>
+            <p>Three All You Can Eat branches. Two Order by Order destinations. One brand defined by fire, flavour, and the people gathered around it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="values-section" id="values">
+  <div class="values-inner">
+    <div class="values-header reveal">
+      <p class="section-label">What We Stand For</p>
+      <h2 class="section-title">Our <em>Values</em></h2>
+      <p class="section-desc">The principles behind every cut, every flame, and every guest who pulls up a chair at our grill.</p>
+    </div>
+
+    <div class="values-grid">
+      <div class="value-card reveal">
+        <div class="value-num">I</div>
+        <h3>Fire & Authenticity</h3>
+        <p>Real charcoal and traditional technique. We honour the flame because it is where Korean BBQ begins.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-num">II</div>
+        <h3>Quality Without Compromise</h3>
+        <p>Premium cuts and fresh banchan, every day. Our standard is non-negotiable — at every location.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-num">III</div>
+        <h3>Gathering & Community</h3>
+        <p>The grill is a shared ritual. We design spaces for connection — friends, families, first-timers who become regulars.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-num">IV</div>
+        <h3>Warm Hospitality</h3>
+        <p>Attentive without being intrusive. Genuine without being performative. Every guest feels welcomed.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-num">V</div>
+        <h3>Thoughtful Growth</h3>
+        <p>We expand with intention. Each new location earns its place — never at the expense of what defines us.</p>
+      </div>
+      <div class="value-card reveal">
+        <div class="value-num">VI</div>
+        <h3>Tradition & Modernity</h3>
+        <p>Korean roots, Melbourne present. Respecting heritage while crafting an experience for how we dine today.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="food-section" id="menu">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <div>
+      <p class="section-label">Signature Dishes</p>
+      <h2 class="section-title">From the Grill</h2>
+    </div>
+  </div>
+  <div class="food-track" id="foodTrack">
+    <div class="food-card"><div class="food-img-box"><span>🥩</span><small>Photo Slot</small></div><div class="food-card-info"><h4>Samgyeopsal</h4><p>Thick-cut pork belly</p></div></div>
+    <div class="food-card"><div class="food-img-box"><span>🥓</span><small>Photo Slot</small></div><div class="food-card-info"><h4>Galbi</h4><p>Marinated short ribs</p></div></div>
+    <div class="food-card"><div class="food-img-box"><span>🍖</span><small>Photo Slot</small></div><div class="food-card-info"><h4>Bulgogi</h4><p>Sweet soy beef</p></div></div>
+    <div class="food-card"><div class="food-img-box"><span>🐓</span><small>Photo Slot</small></div><div class="food-card-info"><h4>Dak Galbi</h4><p>Spicy chicken</p></div></div>
+    <div class="food-card"><div class="food-img-box"><span>🦑</span><small>Photo Slot</small></div><div class="food-card-info"><h4>Ojingeo Gui</h4><p>Grilled squid</p></div></div>
+    <div class="food-card"><div class="food-img-box"><span>🥗</span><small>Photo Slot</small></div><div class="food-card-info"><h4>Banchan Set</h4><p>Korean sides</p></div></div>
+    <div class="food-card"><div class="food-img-box"><span>🍲</span><small>Photo Slot</small></div><div class="food-card-info"><h4>Sundubu Jjigae</h4><p>Silken tofu stew</p></div></div>
+    <div class="food-card"><div class="food-img-box"><span>🍚</span><small>Photo Slot</small></div><div class="food-card-info"><h4>Dolsot Bibimbap</h4><p>Stone bowl rice</p></div></div>
+  </div>
+</section>
+
+<section class="choose-section" id="experience">
+  <div class="choose-inner">
+    <div class="choose-intro reveal">
+      <p class="section-label">02 — Your Experience</p>
+      <h2 class="section-title">Choose How<br>You <em>Wish to Dine</em></h2>
+      <p class="section-desc">Two entirely different experiences, five remarkable locations.</p>
+    </div>
+    <div class="choose-grid">
+      <a class="choice-card reveal" href="ayce.html">
+        <span class="choice-num">I</span>
+        <span class="choice-tag">Three Locations Available</span>
+        <h3 class="choice-name">All You<br>Can Eat</h3>
+        <p class="choice-desc">Unlimited rounds of premium cuts, banchan, and sides. The full, generous Korean BBQ experience.</p>
+        <span class="choice-link">Explore Locations</span>
+        <span class="choice-branches-count">3 branches</span>
+      </a>
+      <a class="choice-card reveal" href="ala-carte.html">
+        <span class="choice-num">II</span>
+        <span class="choice-tag">Two Locations Available</span>
+        <h3 class="choice-name">Order<br>by Order</h3>
+        <p class="choice-desc">Curated sets and individual dishes at your pace. For those who savour every choice.</p>
+        <span class="choice-link">Explore Locations</span>
+        <span class="choice-branches-count">2 branches</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="info-bar">
+  <div class="info-item"><span>Hours</span><p>Open 7 Days · Lunch & Dinner</p></div>
+  <div class="info-divider"></div>
+  <div class="info-item"><span>Reservations</span><p>Walk-ins Welcome · Bookings Available</p></div>
+  <div class="info-divider"></div>
+  <div class="info-item"><span>Locations</span><p>5 Branches Across Melbourne</p></div>
+  <div class="info-divider"></div>
+  <div class="info-item"><span>Private Events</span><p>Group Bookings · Private Dining</p></div>
+</div>
+
+<footer>
+  <div class="footer-logo">BBQ<em>—K</em></div>
+  <p>© 2025 BBQ-K · <a href="index.html" style="color:rgba(255,255,255,0.25);text-decoration:none;">Classic</a> · <a href="brutalist.html" style="color:rgba(255,255,255,0.25);text-decoration:none;">Brutalist</a> · <a href="luxury.html" style="color:var(--gold);text-decoration:none;">Luxury</a></p>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>60));
+document.querySelectorAll('.reveal').forEach(el=>{new IntersectionObserver(([e])=>{if(e.isIntersecting)el.classList.add('visible');},{threshold:0.1}).observe(el);});
+const track=document.getElementById('foodTrack');
+let down=false,sx,sl;
+track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;track.style.cursor='grabbing';});
+track.addEventListener('mouseleave',()=>{down=false;track.style.cursor='grab';});
+track.addEventListener('mouseup',()=>{down=false;track.style.cursor='grab';});
+track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx)*1.2;});
+</script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BBQ-K — Brutalist Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --black:#0D0D0D;--black2:#141414;--white:#F0EDE8;--white2:#D8D4CE;
+  --red:#E01A1A;--red2:#FF2020;--gray:#2A2A2A;--gray2:#444;--gray3:#888;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Mono',monospace;background:var(--black);color:var(--white);overflow-x:hidden;}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+  background-size:80px 80px;pointer-events:none;z-index:0;
+}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:grid;grid-template-columns:auto 1fr auto;align-items:center;height:60px;background:transparent;border-bottom:3px solid transparent;transition:background 0.3s,border-color 0.3s;}
+nav.scrolled{background:var(--black);border-bottom-color:var(--white);}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px;color:var(--white);text-decoration:none;padding:0 28px;border-right:3px solid var(--white);height:100%;display:flex;align-items:center;}
+.nav-logo span{color:var(--red);}
+.nav-links{display:flex;height:100%;}
+.nav-links a{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gray3);text-decoration:none;padding:0 20px;border-right:1px solid var(--gray);height:100%;display:flex;align-items:center;transition:background 0.15s,color 0.15s;}
+.nav-links a:hover{background:var(--white);color:var(--black);}
+.nav-reserve{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:3px;color:var(--black);background:var(--red);text-decoration:none;padding:0 28px;height:100%;display:flex;align-items:center;border-left:3px solid var(--white);transition:background 0.15s;}
+.nav-reserve:hover{background:var(--red2);}
+
+/* VIDEO HERO */
+.hero{min-height:100vh;display:grid;grid-template-rows:1fr auto;padding-top:60px;position:relative;overflow:hidden;}
+.hero-video-wrap{position:absolute;inset:0;z-index:0;}
+.hero-video{width:100%;height:100%;object-fit:cover;}
+.hero-video-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,13,13,0.82) 0%,rgba(13,13,13,0.65) 50%,rgba(13,13,13,0.88) 100%);}
+
+.hero-main{display:grid;grid-template-columns:1fr 420px;position:relative;z-index:2;min-height:calc(100vh - 60px);}
+.hero-text{padding:64px 56px;display:flex;flex-direction:column;justify-content:flex-end;border-right:3px solid rgba(255,255,255,0.25);position:relative;}
+.hero-counter{font-size:10px;font-weight:700;letter-spacing:4px;color:var(--gray3);margin-bottom:32px;animation:fadeUp 0.6s ease both;}
+.hero-title{font-family:'Anton',sans-serif;font-size:clamp(72px,12vw,160px);line-height:0.88;color:var(--white);letter-spacing:-2px;animation:fadeUp 0.6s 0.1s ease both;}
+.hero-title .line-red{color:var(--red);display:block;}
+.hero-title .line-out{-webkit-text-stroke:2px var(--white);color:transparent;display:block;}
+
+.hero-side{padding:64px 40px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;background:rgba(13,13,13,0.4);backdrop-filter:blur(4px);}
+.hero-side-tag{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gray3);margin-bottom:24px;}
+.hero-side h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,3vw,44px);letter-spacing:3px;color:var(--white);line-height:1.1;margin-bottom:20px;}
+.hero-side p{font-size:12px;line-height:1.9;color:var(--gray3);margin-bottom:32px;}
+.hero-side p strong{color:var(--white2);font-weight:400;}
+.hero-num-row{display:flex;gap:0;border:1px solid var(--gray);}
+.hero-num{flex:1;padding:16px;text-align:center;border-right:1px solid var(--gray);}
+.hero-num:last-child{border-right:none;}
+.hero-num-val{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:var(--white);display:block;}
+.hero-num-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gray3);}
+
+.marquee-bar{border-top:3px solid var(--white);border-bottom:3px solid var(--white);padding:12px 0;overflow:hidden;background:var(--red);position:relative;z-index:2;}
+.marquee-inner{display:inline-flex;animation:ticker 18s linear infinite;white-space:nowrap;}
+.marquee-item{font-family:'Anton',sans-serif;font-size:18px;letter-spacing:3px;color:var(--black);padding:0 24px;}
+.marquee-sep{color:rgba(0,0,0,0.4);}
+
+/* STORY */
+.story-section{border-bottom:3px solid var(--white);position:relative;z-index:1;}
+.story-header{display:grid;grid-template-columns:60px 1fr;border-bottom:2px solid var(--gray);}
+.story-header-num{border-right:2px solid var(--gray);display:flex;align-items:center;justify-content:center;padding:24px 0;}
+.story-header-num span{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gray3);writing-mode:vertical-rl;letter-spacing:2px;}
+.story-header-text{padding:40px 48px;}
+.story-header-text h2{font-family:'Anton',sans-serif;font-size:clamp(32px,5vw,56px);letter-spacing:2px;color:var(--white);margin-bottom:12px;}
+.story-header-text h2 em{font-style:normal;color:var(--red);}
+.story-header-text p{font-size:12px;line-height:1.85;color:var(--gray3);max-width:560px;}
+
+.story-grid{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:2px solid var(--gray);}
+.story-milestone{padding:28px 24px;border-right:1px solid var(--gray);transition:background 0.15s;}
+.story-milestone:last-child{border-right:none;}
+.story-milestone:hover{background:var(--gray);}
+.story-milestone-year{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--red);display:block;margin-bottom:8px;}
+.story-milestone h4{font-family:'Anton',sans-serif;font-size:14px;letter-spacing:1px;color:var(--white);margin-bottom:8px;line-height:1.2;}
+.story-milestone p{font-size:10px;line-height:1.7;color:var(--gray3);}
+
+.story-detail{display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid var(--gray);}
+.story-detail-block{padding:48px;border-right:1px solid var(--gray);}
+.story-detail-block:last-child{border-right:none;}
+.story-detail-block h3{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:2px;color:var(--white);margin-bottom:16px;}
+.story-detail-block p{font-size:12px;line-height:1.85;color:var(--gray3);margin-bottom:12px;}
+
+/* VALUES */
+.values-section{border-bottom:3px solid var(--white);position:relative;z-index:1;}
+.values-header{display:grid;grid-template-columns:60px 1fr;border-bottom:2px solid var(--gray);}
+.values-header-num{border-right:2px solid var(--gray);display:flex;align-items:center;justify-content:center;}
+.values-header-num span{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gray3);writing-mode:vertical-rl;}
+.values-header-text{padding:40px 48px;}
+.values-header-text h2{font-family:'Anton',sans-serif;font-size:clamp(32px,5vw,56px);letter-spacing:2px;color:var(--white);}
+.values-header-text h2 em{font-style:normal;color:var(--red);}
+.values-header-text p{font-size:12px;line-height:1.85;color:var(--gray3);max-width:480px;margin-top:12px;}
+
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);}
+.value-cell{padding:36px 32px;border-right:1px solid var(--gray);border-bottom:1px solid var(--gray);transition:background 0.15s;}
+.value-cell:hover{background:var(--red);}
+.value-cell:hover .value-num,.value-cell:hover h4,.value-cell:hover p{color:var(--white);}
+.value-cell:nth-child(3n){border-right:none;}
+.value-num{font-family:'Anton',sans-serif;font-size:48px;color:rgba(255,255,255,0.06);line-height:1;margin-bottom:8px;transition:color 0.15s;}
+.value-cell h4{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--white);margin-bottom:12px;transition:color 0.15s;}
+.value-cell p{font-size:11px;line-height:1.8;color:var(--gray3);transition:color 0.15s;}
+
+/* FOOD */
+.food-section{border-bottom:3px solid var(--white);position:relative;z-index:1;}
+.food-header{display:grid;grid-template-columns:60px 1fr;border-bottom:2px solid var(--gray);}
+.food-header-num{border-right:2px solid var(--gray);display:flex;align-items:center;justify-content:center;}
+.food-header-num span{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gray3);writing-mode:vertical-rl;}
+.food-header-title{padding:20px 28px;display:flex;align-items:center;justify-content:space-between;}
+.food-header-title h3{font-family:'Anton',sans-serif;font-size:24px;letter-spacing:3px;color:var(--white);}
+.food-header-title span{font-size:10px;letter-spacing:2px;color:var(--gray3);}
+.food-track{display:flex;gap:0;overflow-x:auto;scrollbar-width:thin;scrollbar-color:var(--red) var(--black);cursor:grab;}
+.food-track::-webkit-scrollbar{height:3px;}
+.food-track::-webkit-scrollbar-thumb{background:var(--red);}
+.food-card{flex:0 0 180px;border-right:2px solid var(--gray);transition:background 0.15s;}
+.food-card:hover{background:var(--gray);}
+.food-img{height:160px;background:var(--black2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-bottom:1px solid var(--gray);}
+.food-img span{font-size:32px;filter:grayscale(0.6);}
+.food-img small{font-size:9px;letter-spacing:2px;color:var(--gray2);text-transform:uppercase;}
+.food-info{padding:12px 14px;}
+.food-info h4{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--white);}
+.food-info p{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--gray3);margin-top:3px;}
+
+/* CHOOSE */
+.choose-section{display:grid;grid-template-columns:1fr 1fr;min-height:520px;position:relative;z-index:1;}
+.choice-block{position:relative;padding:56px 48px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;overflow:hidden;transition:background 0.2s;}
+.choice-block.ayce{border-right:3px solid var(--white);background:var(--black);}
+.choice-block.ala{background:var(--black2);}
+.choice-block.ayce:hover{background:var(--red);}
+.choice-block.ala:hover{background:var(--white);}
+.choice-label{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gray3);margin-bottom:20px;transition:color 0.2s;}
+.choice-block.ayce:hover .choice-label{color:rgba(255,255,255,0.6);}
+.choice-block.ala:hover .choice-label{color:var(--gray2);}
+.choice-title{font-family:'Anton',sans-serif;font-size:clamp(48px,6vw,80px);line-height:0.9;letter-spacing:-1px;color:var(--white);margin-bottom:24px;transition:color 0.2s;}
+.choice-block.ala:hover .choice-title{color:var(--black);}
+.choice-desc{font-size:12px;line-height:1.85;color:var(--gray3);max-width:320px;transition:color 0.2s;}
+.choice-block.ayce:hover .choice-desc{color:rgba(255,255,255,0.7);}
+.choice-block.ala:hover .choice-desc{color:var(--gray2);}
+.choice-bottom{display:flex;align-items:center;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1px solid var(--gray);transition:border-color 0.2s;}
+.choice-branches{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gray3);transition:color 0.2s;}
+.choice-block.ayce:hover .choice-branches{color:rgba(255,255,255,0.6);}
+.choice-block.ala:hover .choice-branches{color:var(--gray2);}
+.choice-arrow{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;transition:color 0.2s;}
+.choice-block.ayce .choice-arrow{color:var(--red);}
+.choice-block.ayce:hover .choice-arrow{color:var(--white);}
+.choice-block.ala .choice-arrow{color:var(--white);}
+.choice-block.ala:hover .choice-arrow{color:var(--black);}
+.choice-bg-num{position:absolute;bottom:-20px;right:-10px;font-family:'Anton',sans-serif;font-size:200px;line-height:1;color:rgba(255,255,255,0.03);pointer-events:none;letter-spacing:-8px;}
+
+.info-grid{display:grid;grid-template-columns:repeat(4,1fr);border-top:3px solid var(--white);position:relative;z-index:1;}
+.info-cell{padding:24px 28px;border-right:1px solid var(--gray);}
+.info-cell:last-child{border-right:none;}
+.info-cell span{font-size:9px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gray3);display:block;margin-bottom:8px;}
+.info-cell p{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--white);}
+
+footer{border-top:3px solid var(--white);display:grid;grid-template-columns:auto 1fr auto;align-items:center;height:56px;position:relative;z-index:1;}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;color:var(--white);padding:0 28px;border-right:1px solid var(--gray);}
+.footer-logo span{color:var(--red);}
+footer p{font-size:10px;letter-spacing:2px;color:var(--gray3);padding:0 28px;}
+.footer-red{background:var(--red);height:100%;display:flex;align-items:center;padding:0 28px;border-left:1px solid var(--gray);}
+.footer-red span{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--black);}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity 0.6s,transform 0.6s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+@media(max-width:900px){
+  .nav-links{display:none;}
+  .hero-main{grid-template-columns:1fr;}
+  .hero-side{display:none;}
+  .story-grid{grid-template-columns:1fr;}
+  .story-milestone{border-right:none;border-bottom:1px solid var(--gray);}
+  .story-detail{grid-template-columns:1fr;}
+  .story-detail-block{border-right:none;border-bottom:1px solid var(--gray);}
+  .values-grid{grid-template-columns:1fr;}
+  .value-cell{border-right:none;}
+  .choose-section{grid-template-columns:1fr;}
+  .choice-block.ayce{border-right:none;border-bottom:3px solid var(--white);}
+  .info-grid{grid-template-columns:1fr 1fr;}
+  .footer-red{display:none;}
+  .hero-text{padding:48px 24px;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="index.html">BBQ<span>-K</span></a>
+  <div class="nav-links">
+    <a href="#story">Story</a>
+    <a href="#values">Values</a>
+    <a href="#dishes">Dishes</a>
+    <a href="#choose">Dine</a>
+  </div>
+  <a class="nav-reserve" href="#choose">Reserve</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-video-wrap">
+    <video class="hero-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
+      <source src="assets/hero-cinematic.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+  </div>
+  <div class="hero-main">
+    <div class="hero-text">
+      <p class="hero-counter">001 / KOREAN BBQ / MELBOURNE</p>
+      <h1 class="hero-title">
+        <span>BBQ</span>
+        <span class="line-red">—K</span>
+        <span class="line-out">GRILL</span>
+      </h1>
+    </div>
+    <div class="hero-side">
+      <p class="hero-side-tag">// Brand Statement</p>
+      <h2>Five Locations.<br>One Obsession.</h2>
+      <p><strong>Real fire. Real cuts.</strong> From one grill in 2018 to five Melbourne locations — BBQ-K grew on quality, community, and the belief that Korean BBQ belongs at the centre of every great night out.</p>
+      <div class="hero-num-row">
+        <div class="hero-num"><span class="hero-num-val">5</span><span class="hero-num-label">Locations</span></div>
+        <div class="hero-num"><span class="hero-num-val">2</span><span class="hero-num-label">Styles</span></div>
+        <div class="hero-num"><span class="hero-num-val">7</span><span class="hero-num-label">Days</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee-bar">
+  <div class="marquee-inner">
+    <span class="marquee-item">EST. 2018 <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">5 MELBOURNE LOCATIONS <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">FIRE & AUTHENTICITY <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">ALL YOU CAN EAT <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">ORDER BY ORDER <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">OPEN 7 DAYS <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">EST. 2018 <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">5 MELBOURNE LOCATIONS <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">FIRE & AUTHENTICITY <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">ALL YOU CAN EAT <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">ORDER BY ORDER <span class="marquee-sep">//</span></span>
+    <span class="marquee-item">OPEN 7 DAYS <span class="marquee-sep">//</span></span>
+  </div>
+</div>
+
+<section class="story-section" id="story">
+  <div class="story-header reveal">
+    <div class="story-header-num"><span>STORY</span></div>
+    <div class="story-header-text">
+      <h2>HOW WE <em>GREW</em></h2>
+      <p>One family's passion for authentic Korean grilling → Melbourne's destination for fire, flavour, and unforgettable gatherings.</p>
+    </div>
+  </div>
+
+  <div class="story-grid reveal">
+    <div class="story-milestone">
+      <span class="story-milestone-year">2018</span>
+      <h4>THE FIRST FLAME</h4>
+      <p>One location. One grill. Real charcoal, premium cuts, shared dining.</p>
+    </div>
+    <div class="story-milestone">
+      <span class="story-milestone-year">2020</span>
+      <h4>COMMUNITY BUILT</h4>
+      <p>Word of mouth. Loyal regulars. Refined recipes, expanded banchan.</p>
+    </div>
+    <div class="story-milestone">
+      <span class="story-milestone-year">2022</span>
+      <h4>AYCE LAUNCH</h4>
+      <p>Two new locations. Unlimited rounds. Big groups, big appetites.</p>
+    </div>
+    <div class="story-milestone">
+      <span class="story-milestone-year">2023</span>
+      <h4>À LA CARTE</h4>
+      <p>Premium set menus. AU$88–$350. Precision and pacing.</p>
+    </div>
+    <div class="story-milestone">
+      <span class="story-milestone-year">2025</span>
+      <h4>FIVE LOCATIONS</h4>
+      <p>3 AYCE branches. 2 Order by Order. One brand, one obsession.</p>
+    </div>
+  </div>
+
+  <div class="story-detail reveal">
+    <div class="story-detail-block">
+      <h3>FROM ONE GRILL TO A CITY</h3>
+      <p>BBQ-K started with a belief: Korean BBQ done right — over live fire, with no shortcuts — creates moments people remember. That belief didn't change as we grew. It scaled.</p>
+      <p>Each new location was chosen deliberately. Each menu was tested against the same standard. We didn't chase expansion — we earned it through guests who kept coming back.</p>
+    </div>
+    <div class="story-detail-block">
+      <h3>TWO WAYS TO DINE</h3>
+      <p>Our growth revealed something important: not every guest wants the same experience. Some come for unlimited rounds and celebration energy. Others want curated sets and a slower pace.</p>
+      <p>So we built two distinct paths — All You Can Eat at three branches, Order by Order at two — without splitting the soul of what makes BBQ-K, BBQ-K.</p>
+    </div>
+  </div>
+</section>
+
+<section class="values-section" id="values">
+  <div class="values-header reveal">
+    <div class="values-header-num"><span>VALUES</span></div>
+    <div class="values-header-text">
+      <h2>WHAT WE <em>STAND FOR</em></h2>
+      <p>Every plate, every grill, every guest — guided by principles that haven't changed since day one.</p>
+    </div>
+  </div>
+
+  <div class="values-grid">
+    <div class="value-cell reveal">
+      <div class="value-num">01</div>
+      <h4>FIRE & AUTHENTICITY</h4>
+      <p>Real charcoal. Traditional techniques. The flame is where flavour begins — we never shortcut it.</p>
+    </div>
+    <div class="value-cell reveal">
+      <div class="value-num">02</div>
+      <h4>QUALITY FIRST</h4>
+      <p>Premium cuts. Fresh banchan daily. If it doesn't meet our standard, it doesn't reach your grill.</p>
+    </div>
+    <div class="value-cell reveal">
+      <div class="value-num">03</div>
+      <h4>COMMUNITY</h4>
+      <p>BBQ is built for sharing. We create spaces where strangers become regulars over sizzling meat.</p>
+    </div>
+    <div class="value-cell reveal">
+      <div class="value-num">04</div>
+      <h4>HOSPITALITY</h4>
+      <p>Attentive, genuine, never rushed. Every guest treated like family from walk-in to last round.</p>
+    </div>
+    <div class="value-cell reveal">
+      <div class="value-num">05</div>
+      <h4>THOUGHTFUL GROWTH</h4>
+      <p>We expand deliberately. New locations earn their place — never at the cost of quality or soul.</p>
+    </div>
+    <div class="value-cell reveal">
+      <div class="value-num">06</div>
+      <h4>TRADITION + NOW</h4>
+      <p>Korean roots, Melbourne energy. Honouring tradition while embracing how we dine today.</p>
+    </div>
+  </div>
+</section>
+
+<section class="food-section" id="dishes">
+  <div class="food-header">
+    <div class="food-header-num"><span>DISHES</span></div>
+    <div class="food-header-title">
+      <h3>FROM THE GRILL</h3>
+      <span>Drag to scroll →</span>
+    </div>
+  </div>
+  <div class="food-track" id="foodTrack">
+    <div class="food-card"><div class="food-img"><span>🥩</span><small>Photo</small></div><div class="food-info"><h4>Samgyeopsal</h4><p>Pork Belly</p></div></div>
+    <div class="food-card"><div class="food-img"><span>🥓</span><small>Photo</small></div><div class="food-info"><h4>Galbi</h4><p>Short Ribs</p></div></div>
+    <div class="food-card"><div class="food-img"><span>🍖</span><small>Photo</small></div><div class="food-info"><h4>Bulgogi</h4><p>Soy Beef</p></div></div>
+    <div class="food-card"><div class="food-img"><span>🐓</span><small>Photo</small></div><div class="food-info"><h4>Dak Galbi</h4><p>Spicy Chicken</p></div></div>
+    <div class="food-card"><div class="food-img"><span>🦑</span><small>Photo</small></div><div class="food-info"><h4>Ojingeo</h4><p>Grilled Squid</p></div></div>
+    <div class="food-card"><div class="food-img"><span>🥗</span><small>Photo</small></div><div class="food-info"><h4>Banchan</h4><p>Korean Sides</p></div></div>
+    <div class="food-card"><div class="food-img"><span>🍲</span><small>Photo</small></div><div class="food-info"><h4>Sundubu</h4><p>Tofu Stew</p></div></div>
+    <div class="food-card"><div class="food-img"><span>🍚</span><small>Photo</small></div><div class="food-info"><h4>Bibimbap</h4><p>Stone Bowl</p></div></div>
+  </div>
+</section>
+
+<section class="choose-section" id="choose">
+  <a class="choice-block ayce reveal" href="ayce.html">
+    <div>
+      <p class="choice-label">Option 01 · 3 Locations</p>
+      <h3 class="choice-title">ALL YOU<br>CAN EAT</h3>
+      <p class="choice-desc">Unlimited BBQ. Unlimited sides. Unlimited rounds. Three Melbourne locations running full-fire all-you-can-eat.</p>
+    </div>
+    <div class="choice-bottom">
+      <span class="choice-branches">3 Branches Available</span>
+      <span class="choice-arrow">VIEW →</span>
+    </div>
+    <span class="choice-bg-num">01</span>
+  </a>
+  <a class="choice-block ala reveal" href="ala-carte.html">
+    <div>
+      <p class="choice-label">Option 02 · 2 Locations</p>
+      <h3 class="choice-title">ORDER<br>BY ORDER</h3>
+      <p class="choice-desc">Precision over volume. Curated menus from AU$88 to AU$350 at two select locations.</p>
+    </div>
+    <div class="choice-bottom">
+      <span class="choice-branches">2 Branches Available</span>
+      <span class="choice-arrow">VIEW →</span>
+    </div>
+    <span class="choice-bg-num">02</span>
+  </a>
+</section>
+
+<div class="info-grid">
+  <div class="info-cell"><span>Hours</span><p>Open 7 Days</p></div>
+  <div class="info-cell"><span>Service</span><p>Lunch & Dinner</p></div>
+  <div class="info-cell"><span>Walk-ins</span><p>Always Welcome</p></div>
+  <div class="info-cell"><span>Events</span><p>Private Bookings</p></div>
+</div>
+
+<footer>
+  <div class="footer-logo">BBQ<span>-K</span></div>
+  <p>© 2025 BBQ-K · <a href="index.html" style="color:var(--gray3);text-decoration:none;">Classic</a> · <a href="brutalist.html" style="color:var(--white);text-decoration:none;">Brutalist</a> · <a href="luxury.html" style="color:var(--gray3);text-decoration:none;">Luxury</a></p>
+  <div class="footer-red"><span>Melbourne, AU</span></div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>60));
+document.querySelectorAll('.reveal').forEach(el=>{new IntersectionObserver(([e])=>{if(e.isIntersecting)el.classList.add('visible');},{threshold:0.1}).observe(el);});
+const track=document.getElementById('foodTrack');
+let down=false,sx,sl;
+track.addEventListener('mousedown',e=>{down=true;sx=e.pageX-track.offsetLeft;sl=track.scrollLeft;track.style.cursor='grabbing';});
+track.addEventListener('mouseleave',()=>{down=false;track.style.cursor='grab';});
+track.addEventListener('mouseup',()=>{down=false;track.style.cursor='grab';});
+track.addEventListener('mousemove',e=>{if(!down)return;e.preventDefault();track.scrollLeft=sl-(e.pageX-track.offsetLeft-sx)*1.2;});
+</script>
+</body>
+</html>
