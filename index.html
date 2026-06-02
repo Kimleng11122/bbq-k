@@ -943,72 +943,335 @@
 
   /* ── FOOD STRIP ── */
   .food-strip-section {
-    padding: 64px 0 56px;
-    background: var(--char2);
+    padding: 86px 0 74px;
+    background: var(--char);
     border-top: 1px solid rgba(255,255,255,0.06);
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
-  .food-strip-section .section-label { text-align: center; margin-bottom: 32px; }
+  .food-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .food-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-bottom: 22px;
+  }
+
+  .food-heading p.section-label { margin-bottom: 10px; }
+
+  .food-heading .section-desc {
+    max-width: 520px;
+    font-size: 15px;
+  }
+
+  .food-filters {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .food-filter-chip {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.02);
+    color: rgba(255,255,255,0.52);
+    padding: 7px 12px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.28s ease, background 0.28s ease, color 0.28s ease;
+  }
+
+  .food-filter-chip:hover {
+    border-color: rgba(255,255,255,0.22);
+    color: rgba(255,255,255,0.72);
+  }
+
+  .food-filter-chip:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  .food-filter-chip.is-active {
+    border-color: rgba(212,43,43,0.45);
+    background: rgba(212,43,43,0.14);
+    color: var(--gold);
+  }
+
+  .food-card.is-hidden {
+    display: none;
+  }
+
+  .food-empty {
+    margin: 18px 0 0;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+  }
+
+  .food-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 36px;
+    padding-top: 8px;
+  }
+
+  .food-cta-note {
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    margin: 0 0 4px;
+  }
+
+  .food-reel-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .food-reel-hint {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .food-controls {
+    display: flex;
+    gap: 10px;
+  }
+
+  .food-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.03);
+    color: rgba(255,255,255,0.8);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.28s ease;
+  }
+
+  .food-btn:hover:not(:disabled) {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-1px);
+  }
+
+  .food-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
 
   .food-scroll-track {
     display: flex;
-    gap: 16px;
+    gap: 18px;
     overflow-x: auto;
-    padding: 0 48px 16px;
+    padding: 8px 0 16px;
     scroll-snap-type: x mandatory;
     scrollbar-width: thin;
-    scrollbar-color: var(--red) var(--char2);
+    scrollbar-color: var(--red) transparent;
     cursor: grab;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
   }
 
   .food-scroll-track:active { cursor: grabbing; }
   .food-scroll-track::-webkit-scrollbar { height: 4px; }
-  .food-scroll-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+  .food-scroll-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
   .food-scroll-track::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
 
   .food-card {
-    flex: 0 0 220px;
+    flex: 0 0 min(330px, 82vw);
     scroll-snap-align: start;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    background: var(--smoke);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: transform 0.2s, border-color 0.2s;
+    background: #202020;
+    border: 1px solid rgba(255,255,255,0.12);
+    position: relative;
+    z-index: 1;
+    transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 0.42s,
+                box-shadow 0.42s,
+                z-index 0s;
   }
 
-  .food-card:hover { transform: translateY(-4px); border-color: var(--red); }
+  .food-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    pointer-events: none;
+    transition: border-color 0.32s ease;
+    z-index: 3;
+  }
 
-  .food-img-placeholder {
+  #foodTrack:not(:has(.food-card:hover)) .food-card.is-active {
+    border-color: rgba(212,43,43,0.22);
+  }
+
+  #foodTrack:not(:has(.food-card:hover)) .food-card.is-active::before {
+    border-color: rgba(245,166,35,0.14);
+  }
+
+  .food-card:hover {
+    z-index: 4;
+    transform: translateY(-6px);
+    border-color: rgba(212,43,43,0.45);
+    box-shadow: 0 16px 44px rgba(0,0,0,0.35);
+  }
+
+  .food-card:hover::before {
+    border-color: rgba(245,166,35,0.42);
+  }
+
+  .food-image-wrap {
+    position: relative;
     width: 100%;
-    height: 160px;
+    height: 280px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #3D1F1F 0%, #232323 100%);
+  }
+
+  .food-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s;
+    filter: saturate(1.06);
+  }
+
+  #foodTrack:not(:has(.food-card:hover)) .food-card.is-active .food-image-wrap img {
+    transform: scale(1.02);
+    filter: saturate(1.1);
+  }
+
+  .food-card:hover .food-image-wrap img {
+    transform: scale(1.06);
+    filter: saturate(1.14);
+  }
+
+  .food-image-placeholder {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #3D1F1F 0%, #2A2A2A 100%);
-    font-size: 32px;
+    gap: 7px;
+    font-size: 36px;
+    color: rgba(255,255,255,0.28);
+    background: linear-gradient(140deg, rgba(212,43,43,0.2), rgba(32,32,32,0.75));
+    transition: opacity 0.35s ease;
+    pointer-events: none;
   }
 
-  .food-img-placeholder span {
+  .food-image-wrap.has-photo .food-image-placeholder {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .food-image-placeholder span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.26);
+  }
+
+  .food-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 2;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(20,20,20,0.6);
+    border: 1px solid rgba(255,255,255,0.22);
+    color: var(--gold);
+    backdrop-filter: blur(2px);
+  }
+
+  .food-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    padding: 48px 16px 14px;
+    background: linear-gradient(to top, rgba(16,16,16,0.95), rgba(16,16,16,0.04));
+    pointer-events: none;
+  }
+
+  .food-overlay h4 {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 24px;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .food-overlay p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.68);
+    line-height: 1.45;
+    max-width: 280px;
+  }
+
+  .food-card-label {
+    padding: 12px 14px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .food-card-label h5 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .food-card-label p {
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.2);
+    color: var(--gold);
   }
-
-  .food-card-label { padding: 12px 14px; }
-
-  .food-card-label h4 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    letter-spacing: 1px;
-  }
-
-  .food-card-label p { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 2px; }
 
   /* ── CHOOSE ── */
   .choose-section {
@@ -1162,6 +1425,13 @@
     nav { padding: 0 20px; }
     .nav-links { display: none; }
     .story-stats { grid-template-columns: repeat(2, 1fr); }
+    .food-inner { padding: 0 20px; }
+    .food-header { flex-direction: column; align-items: flex-start; margin-bottom: 18px; }
+    .food-filters { gap: 6px; }
+    .food-reel-meta { margin-bottom: 10px; }
+    .food-image-wrap { height: 248px; }
+    .food-overlay h4 { font-size: 22px; }
+    .food-overlay p { font-size: 12px; }
     .values-section { padding: 76px 20px; }
     .values-layout { grid-template-columns: 1fr; gap: 28px; }
     .values-sticky { position: static; }
@@ -1409,16 +1679,169 @@
 </section>
 
 <section class="food-strip-section" id="menu">
-  <p class="section-label">Our Signature Dishes</p>
-  <div class="food-scroll-track" id="foodTrack">
-    <div class="food-card"><div class="food-img-placeholder">🥩<span>Photo slot</span></div><div class="food-card-label"><h4>Samgyeopsal</h4><p>Thick-cut pork belly</p></div></div>
-    <div class="food-card"><div class="food-img-placeholder">🥓<span>Photo slot</span></div><div class="food-card-label"><h4>Galbi</h4><p>Marinated short ribs</p></div></div>
-    <div class="food-card"><div class="food-img-placeholder">🍖<span>Photo slot</span></div><div class="food-card-label"><h4>Bulgogi</h4><p>Sweet soy beef</p></div></div>
-    <div class="food-card"><div class="food-img-placeholder">🐓<span>Photo slot</span></div><div class="food-card-label"><h4>Dak Galbi</h4><p>Spicy stir-fried chicken</p></div></div>
-    <div class="food-card"><div class="food-img-placeholder">🦑<span>Photo slot</span></div><div class="food-card-label"><h4>Ojingeo Gui</h4><p>Grilled squid</p></div></div>
-    <div class="food-card"><div class="food-img-placeholder">🥗<span>Photo slot</span></div><div class="food-card-label"><h4>Banchan Set</h4><p>Korean side dishes</p></div></div>
-    <div class="food-card"><div class="food-img-placeholder">🍲<span>Photo slot</span></div><div class="food-card-label"><h4>Sundubu Jjigae</h4><p>Soft tofu stew</p></div></div>
-    <div class="food-card"><div class="food-img-placeholder">🍚<span>Photo slot</span></div><div class="food-card-label"><h4>Dolsot Bibimbap</h4><p>Stone bowl rice</p></div></div>
+  <div class="food-inner">
+    <div class="food-header reveal">
+      <div class="food-heading">
+        <p class="section-label">Menu Highlights</p>
+        <h2 class="section-title">Our Signature <em>Dishes</em></h2>
+        <p class="section-desc">House favourites from the grill — premium cuts, bold marinades, and Korean classics made for sharing.</p>
+      </div>
+      <div class="food-filters" role="group" aria-label="Filter dishes by category">
+        <button type="button" class="food-filter-chip is-active" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="food-filter-chip" data-filter="beef" aria-pressed="false">Beef</button>
+        <button type="button" class="food-filter-chip" data-filter="pork" aria-pressed="false">Pork</button>
+        <button type="button" class="food-filter-chip" data-filter="chicken" aria-pressed="false">Chicken</button>
+        <button type="button" class="food-filter-chip" data-filter="seafood" aria-pressed="false">Seafood</button>
+        <button type="button" class="food-filter-chip" data-filter="sides" aria-pressed="false">Sides</button>
+        <button type="button" class="food-filter-chip" data-filter="bowls" aria-pressed="false">Bowls</button>
+      </div>
+    </div>
+
+    <div class="food-reel-meta">
+      <p class="food-reel-hint" id="foodReelHint">Swipe or use arrows</p>
+      <div class="food-controls">
+        <button class="food-btn" id="foodPrev" type="button" aria-label="Previous dish" aria-controls="foodTrack">←</button>
+        <button class="food-btn" id="foodNext" type="button" aria-label="Next dish" aria-controls="foodTrack">→</button>
+      </div>
+    </div>
+
+    <div class="food-scroll-track" id="foodTrack" role="region" aria-label="Signature dishes" tabindex="0">
+      <article class="food-card" data-image-base="samgyeopsal" data-category="pork">
+        <div class="food-image-wrap">
+          <img alt="Samgyeopsal at BBQ-K">
+          <div class="food-image-placeholder">🥩<span>Add dish photo</span></div>
+          <span class="food-badge">Best Seller</span>
+          <div class="food-overlay">
+            <h4>Samgyeopsal</h4>
+            <p>Thick-cut pork belly with deep smoky edges and rich bite.</p>
+          </div>
+        </div>
+        <div class="food-card-label">
+          <h5>Pork</h5>
+          <p>Signature Cut</p>
+        </div>
+      </article>
+
+      <article class="food-card" data-image-base="galbi" data-category="beef">
+        <div class="food-image-wrap">
+          <img alt="Galbi at BBQ-K">
+          <div class="food-image-placeholder">🥓<span>Add dish photo</span></div>
+          <span class="food-badge">Premium</span>
+          <div class="food-overlay">
+            <h4>Galbi</h4>
+            <p>Soy-marinated short ribs caramelised over live flame.</p>
+          </div>
+        </div>
+        <div class="food-card-label">
+          <h5>Beef</h5>
+          <p>Fan Favourite</p>
+        </div>
+      </article>
+
+      <article class="food-card" data-image-base="bulgogi" data-category="beef">
+        <div class="food-image-wrap">
+          <img alt="Bulgogi at BBQ-K">
+          <div class="food-image-placeholder">🍖<span>Add dish photo</span></div>
+          <span class="food-badge">House Marinade</span>
+          <div class="food-overlay">
+            <h4>Bulgogi</h4>
+            <p>Tender sweet soy beef with balanced savoury depth.</p>
+          </div>
+        </div>
+        <div class="food-card-label">
+          <h5>Beef</h5>
+          <p>Classic</p>
+        </div>
+      </article>
+
+      <article class="food-card" data-image-base="dak-galbi" data-category="chicken">
+        <div class="food-image-wrap">
+          <img alt="Dak Galbi at BBQ-K">
+          <div class="food-image-placeholder">🐓<span>Add dish photo</span></div>
+          <span class="food-badge">Spicy</span>
+          <div class="food-overlay">
+            <h4>Dak Galbi</h4>
+            <p>Marinated chicken with bold heat and sweet chilli finish.</p>
+          </div>
+        </div>
+        <div class="food-card-label">
+          <h5>Chicken</h5>
+          <p>Hot Pick</p>
+        </div>
+      </article>
+
+      <article class="food-card" data-image-base="ojingeo-gui" data-category="seafood">
+        <div class="food-image-wrap">
+          <img alt="Ojingeo Gui at BBQ-K">
+          <div class="food-image-placeholder">🦑<span>Add dish photo</span></div>
+          <span class="food-badge">Grill Special</span>
+          <div class="food-overlay">
+            <h4>Ojingeo Gui</h4>
+            <p>Char-grilled squid with smoky snap and savoury glaze.</p>
+          </div>
+        </div>
+        <div class="food-card-label">
+          <h5>Seafood</h5>
+          <p>Smoky</p>
+        </div>
+      </article>
+
+      <article class="food-card" data-image-base="banchan-set" data-category="sides">
+        <div class="food-image-wrap">
+          <img alt="Banchan set at BBQ-K">
+          <div class="food-image-placeholder">🥗<span>Add dish photo</span></div>
+          <span class="food-badge">House Sides</span>
+          <div class="food-overlay">
+            <h4>Banchan Set</h4>
+            <p>Fresh rotating Korean side dishes made daily in-house.</p>
+          </div>
+        </div>
+        <div class="food-card-label">
+          <h5>Sides</h5>
+          <p>Daily Fresh</p>
+        </div>
+      </article>
+
+      <article class="food-card" data-image-base="sundubu-jjigae" data-category="bowls">
+        <div class="food-image-wrap">
+          <img alt="Sundubu Jjigae at BBQ-K">
+          <div class="food-image-placeholder">🍲<span>Add dish photo</span></div>
+          <span class="food-badge">Comfort Bowl</span>
+          <div class="food-overlay">
+            <h4>Sundubu Jjigae</h4>
+            <p>Silken tofu stew with warming spice and umami broth.</p>
+          </div>
+        </div>
+        <div class="food-card-label">
+          <h5>Bowls</h5>
+          <p>Warm Favourite</p>
+        </div>
+      </article>
+
+      <article class="food-card" data-image-base="dolsot-bibimbap" data-category="bowls">
+        <div class="food-image-wrap">
+          <img alt="Dolsot Bibimbap at BBQ-K">
+          <div class="food-image-placeholder">🍚<span>Add dish photo</span></div>
+          <span class="food-badge">Crispy Rice</span>
+          <div class="food-overlay">
+            <h4>Dolsot Bibimbap</h4>
+            <p>Stone bowl rice with crisp edges and mixed Korean toppings.</p>
+          </div>
+        </div>
+        <div class="food-card-label">
+          <h5>Bowls</h5>
+          <p>Iconic Bowl</p>
+        </div>
+      </article>
+    </div>
+
+    <p class="food-empty" id="foodEmpty" hidden>No dishes in this category — try another filter.</p>
+
+    <div class="food-cta reveal">
+      <p class="food-cta-note">All-you-can-eat and à la carte available · menus vary by location</p>
+      <a class="btn-primary" href="#experience">Book a Table</a>
+      <a class="btn-outline" href="#story">Find a Location</a>
+    </div>
   </div>
 </section>
 
@@ -1551,7 +1974,138 @@
     }
   }
 
-  initDragScroll(document.getElementById('foodTrack'));
+  const foodTrack = document.getElementById('foodTrack');
+  initDragScroll(foodTrack, { enableWheel: true });
+
+  if (foodTrack) {
+    const foodCards = Array.from(foodTrack.querySelectorAll('.food-card'));
+    const foodPrev = document.getElementById('foodPrev');
+    const foodNext = document.getElementById('foodNext');
+    const foodEmpty = document.getElementById('foodEmpty');
+    const foodReelHint = document.getElementById('foodReelHint');
+    const foodFilterChips = Array.from(document.querySelectorAll('.food-filter-chip'));
+    const cardStep = () => Math.max(260, Math.floor(foodTrack.clientWidth * 0.72));
+
+    const getVisibleFoodCards = () =>
+      foodCards.filter(card => !card.classList.contains('is-hidden'));
+
+    const updateFoodControls = () => {
+      if (!foodPrev || !foodNext) return;
+      const visible = getVisibleFoodCards();
+      const noScroll = visible.length <= 1;
+      const max = foodTrack.scrollWidth - foodTrack.clientWidth - 2;
+      foodPrev.disabled = noScroll || visible.length === 0 || foodTrack.scrollLeft <= 2;
+      foodNext.disabled = noScroll || visible.length === 0 || foodTrack.scrollLeft >= max;
+      if (foodReelHint) {
+        foodReelHint.hidden = visible.length === 0;
+      }
+    };
+
+    const setActiveFoodCard = () => {
+      const visible = getVisibleFoodCards();
+      if (!visible.length) {
+        foodCards.forEach(card => card.classList.remove('is-active'));
+        updateFoodControls();
+        return;
+      }
+      if (foodTrack.matches(':hover')) {
+        updateFoodControls();
+        return;
+      }
+      const center = foodTrack.scrollLeft + foodTrack.clientWidth / 2;
+      let closest = visible[0];
+      let minDist = Infinity;
+      visible.forEach(card => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const dist = Math.abs(center - cardCenter);
+        if (dist < minDist) { minDist = dist; closest = card; }
+      });
+      foodCards.forEach(card => card.classList.toggle('is-active', card === closest));
+      updateFoodControls();
+    };
+
+    const applyFoodFilter = (filter) => {
+      foodFilterChips.forEach(chip => {
+        const isActive = chip.dataset.filter === filter;
+        chip.classList.toggle('is-active', isActive);
+        chip.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+
+      foodCards.forEach(card => {
+        const category = card.dataset.category || '';
+        const show = filter === 'all' || category === filter;
+        card.classList.toggle('is-hidden', !show);
+        card.setAttribute('aria-hidden', show ? 'false' : 'true');
+      });
+
+      const visible = getVisibleFoodCards();
+      if (foodEmpty) foodEmpty.hidden = visible.length > 0;
+      foodTrack.scrollLeft = 0;
+      setActiveFoodCard();
+    };
+
+    foodFilterChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        applyFoodFilter(chip.dataset.filter || 'all');
+      });
+    });
+
+    const loadDishImage = (card) => {
+      const base = card.dataset.imageBase;
+      const img = card.querySelector('img');
+      const wrap = card.querySelector('.food-image-wrap');
+      if (!base || !img || !wrap) return;
+      const candidates = [
+        `assets/${base}.jpg`,
+        `assets/${base}.jpeg`,
+        `assets/${base}.png`,
+        `assets/${base}.webp`
+      ];
+
+      const tryCandidate = (idx) => {
+        if (idx >= candidates.length) return;
+        const probe = new Image();
+        probe.onload = () => {
+          img.src = candidates[idx];
+          wrap.classList.add('has-photo');
+        };
+        probe.onerror = () => tryCandidate(idx + 1);
+        probe.src = candidates[idx];
+      };
+
+      tryCandidate(0);
+    };
+
+    foodCards.forEach(loadDishImage);
+
+    foodCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        foodCards.forEach(c => c.classList.remove('is-active'));
+      });
+    });
+    foodTrack.addEventListener('mouseleave', setActiveFoodCard);
+
+    if (foodPrev && foodNext) {
+      foodPrev.addEventListener('click', () => {
+        foodTrack.scrollBy({ left: -cardStep(), behavior: 'smooth' });
+      });
+      foodNext.addEventListener('click', () => {
+        foodTrack.scrollBy({ left: cardStep(), behavior: 'smooth' });
+      });
+    }
+
+    foodTrack.addEventListener('scroll', setActiveFoodCard, { passive: true });
+    foodTrack.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      foodTrack.scrollBy({ left: e.key === 'ArrowRight' ? cardStep() : -cardStep(), behavior: 'smooth' });
+    });
+    window.addEventListener('resize', () => {
+      updateFoodControls();
+      setActiveFoodCard();
+    });
+    setActiveFoodCard();
+  }
 
   const storyStage = document.getElementById('storyStage');
   if (storyStage) {
