@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BBQ-K — Korean BBQ</title>
-<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ultra&family=Black+Han+Sans&family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -36,6 +38,25 @@
     background: var(--char);
     color: var(--white);
     overflow-x: hidden;
+  }
+
+  /* Ultra is reserved for key labels and brand marks */
+  .nav-logo,
+  .section-label,
+  .story-stage-kicker,
+  .story-stage-tag,
+  .story-progress-label,
+  .story-stat-label,
+  .story-year-chip,
+  .story-detail-meta,
+  .food-filter-chip,
+  .food-reel-hint,
+  .food-badge,
+  .food-card-label h5,
+  .food-card-label p,
+  .bottom-strip p {
+    font-family: 'Ultra', serif !important;
+    font-weight: 400;
   }
 
   /* scroll progress */
@@ -416,54 +437,39 @@
   }
 
   .story-layout {
-    display: grid;
-    grid-template-columns: minmax(280px, 380px) 1fr;
-    gap: 48px;
-    align-items: start;
-  }
-
-  .story-sticky {
-    position: sticky;
-    top: 100px;
-    padding-right: 24px;
-  }
-
-  .story-quote {
-    margin: 28px 0 32px;
-    padding: 24px 0 24px 20px;
-    border-left: 3px solid var(--red);
-  }
-
-  .story-quote p {
-    font-family: 'Black Han Sans', sans-serif;
-    font-size: clamp(20px, 2.5vw, 26px);
-    line-height: 1.35;
-    color: rgba(255,255,255,0.9);
-  }
-
-  .story-quote cite {
     display: block;
-    margin-top: 12px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 12px;
-    font-style: normal;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
+  }
+
+  .story-topbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+  }
+
+  .story-intro {
+    max-width: 560px;
+  }
+
+  .story-intro .section-desc {
+    max-width: 500px;
   }
 
   .story-stats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .story-stat {
-    padding: 20px 16px;
+    padding: 14px 14px 12px;
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
+    border-radius: 10px;
     transition: border-color 0.25s, transform 0.25s;
+    min-width: 120px;
   }
 
   .story-stat:hover {
@@ -473,7 +479,7 @@
 
   .story-stat-num {
     font-family: 'Black Han Sans', sans-serif;
-    font-size: 36px;
+    font-size: 30px;
     color: var(--red);
     display: block;
     line-height: 1;
@@ -481,11 +487,11 @@
 
   .story-stat-label {
     font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
     color: rgba(255,255,255,0.45);
-    margin-top: 6px;
+    margin-top: 4px;
     display: block;
   }
 
@@ -493,7 +499,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 28px;
+    margin-top: 2px;
     font-family: 'Barlow Condensed', sans-serif;
     font-size: 11px;
     letter-spacing: 3px;
@@ -728,9 +734,8 @@
 
   @media (max-width: 900px) {
     .story-section { padding: 72px 20px; }
-    .story-layout { grid-template-columns: 1fr; gap: 40px; }
-    .story-sticky { position: static; }
-    .story-scroll-hint { display: none; }
+    .story-topbar { flex-direction: column; align-items: flex-start; margin-bottom: 16px; }
+    .story-stats { justify-content: flex-start; width: 100%; }
     .story-cinematic { margin-right: 0; }
     .story-stage { min-height: 420px; }
     .story-stage-content { padding: 28px 24px; }
@@ -1424,7 +1429,6 @@
   @media (max-width: 900px) {
     nav { padding: 0 20px; }
     .nav-links { display: none; }
-    .story-stats { grid-template-columns: repeat(2, 1fr); }
     .food-inner { padding: 0 20px; }
     .food-header { flex-direction: column; align-items: flex-start; margin-bottom: 18px; }
     .food-filters { gap: 6px; }
@@ -1450,7 +1454,6 @@
   <a class="nav-logo" href="#">BBQ<span>-K</span></a>
   <ul class="nav-links">
     <li><a href="#story">Locations</a></li>
-    <li><a href="#values">Values</a></li>
     <li><a href="#menu">Menu</a></li>
     <li><a href="#experience">Dine With Us</a></li>
   </ul>
@@ -1504,40 +1507,14 @@
 <section class="story-section" id="story">
   <div class="story-inner">
     <div class="story-layout">
-      <aside class="story-sticky reveal-left">
-        <p class="section-label">Our Locations</p>
-        <h2 class="section-title">Explore All <em>5 Branches</em></h2>
-        <p class="section-desc">One BBQ-K standard, five different neighbourhood vibes across Melbourne.</p>
-
-        <blockquote class="story-quote reveal">
-          <p>"Same fire, same flavour, five different local energies."</p>
-          <cite>— BBQ-K Melbourne</cite>
-        </blockquote>
-
-        <div class="story-stats stagger-children" id="storyStats">
-          <div class="story-stat">
-            <span class="story-stat-num" data-count="5">0</span>
-            <span class="story-stat-label">Total Branches</span>
-          </div>
-          <div class="story-stat">
-            <span class="story-stat-num" data-count="3">0</span>
-            <span class="story-stat-label">AYCE Branches</span>
-          </div>
-          <div class="story-stat">
-            <span class="story-stat-num" data-count="2">0</span>
-            <span class="story-stat-label">A la Carte Branches</span>
-          </div>
-          <div class="story-stat">
-            <span class="story-stat-num" data-count="7">0</span>
-            <span class="story-stat-label">Days Open</span>
-          </div>
+      <div class="story-topbar reveal">
+        <div class="story-intro">
+          <p class="section-label">Our Locations</p>
+          <h2 class="section-title">Explore All <em>5 Branches</em></h2>
+          <!-- <p class="section-desc">One BBQ-K standard across Melbourne. Pick the branch that fits your vibe.</p> -->
         </div>
-
-        <p class="story-scroll-hint">
-          <span>Browse all branches</span>
-          <span class="arrow-hint">→</span>
-        </p>
-      </aside>
+        
+      </div>
 
       <div class="story-track-wrap reveal-scale">
         <div class="story-cinematic">
@@ -1546,8 +1523,8 @@
             <div class="story-stage-content">
               <p class="story-stage-kicker" id="storyStageKicker">Location 01 · AYCE</p>
               <h3 class="story-stage-title" id="storyStageTitle">BBQ-K Springvale</h3>
-              <p class="story-stage-text" id="storyStageText">A lively AYCE branch packed with full-flame Korean BBQ energy, ideal for groups, celebrations, and big appetites.</p>
-              <span class="story-stage-tag" id="storyStageTag">All You Can Eat · Group Favourite</span>
+              <p class="story-stage-text" id="storyStageText">High-energy AYCE for group nights and full-flame Korean BBQ.</p>
+              <span class="story-stage-tag" id="storyStageTag">AYCE · Group Favourite</span>
             </div>
           </div>
 
@@ -1572,107 +1549,16 @@
           <p class="story-scroll-hint">
             <span>Move between branches</span>
           </p>
-        </div>
-        <div class="story-track-controls" aria-label="Story track controls">
-          <button class="story-track-btn" id="storyPrev" type="button" aria-label="Previous chapter">←</button>
-          <button class="story-track-btn" id="storyNext" type="button" aria-label="Next chapter">→</button>
+          <div class="story-track-controls" aria-label="Story track controls">
+            <button class="story-track-btn" id="storyPrev" type="button" aria-label="Previous location">←</button>
+            <button class="story-track-btn" id="storyNext" type="button" aria-label="Next location">→</button>
+          </div>
         </div>
         <div class="story-detail-panel" id="storyDetailPanel">
           <h4 id="storyDetailTitle">BBQ-K Springvale</h4>
-          <p id="storyDetailText">A lively AYCE branch packed with full-flame Korean BBQ energy, ideal for groups, celebrations, and big appetites.</p>
-          <p class="story-detail-meta" id="storyDetailMeta">Springvale · Location 01 · All You Can Eat · Group Favourite</p>
+          <p id="storyDetailText">High-energy AYCE for group nights and full-flame Korean BBQ.</p>
+          <p class="story-detail-meta" id="storyDetailMeta">Springvale · Location 01 · AYCE · Group Favourite</p>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="values-section" id="values">
-  <div class="values-inner">
-    <div class="values-layout">
-      <aside class="values-sticky reveal-left">
-        <p class="values-kicker">What We Stand For</p>
-        <h2 class="section-title">Our <em>Values</em></h2>
-        <p class="section-desc">Every plate, every grill, every guest — guided by principles that shaped BBQ-K from one location to five.</p>
-
-        <div class="values-manifesto">
-          <p>"Flame first. Quality always. People at the centre."</p>
-        </div>
-
-        <div class="values-live">
-          <p class="values-live-label" id="valuesLiveLabel">Now Showing · 01 / 06</p>
-          <h3 class="values-live-title" id="valuesLiveTitle">Fire & Authenticity</h3>
-          <p class="values-live-text" id="valuesLiveText">Real charcoal. Traditional grilling. No shortcuts where flavour begins.</p>
-        </div>
-
-        <div class="values-progress">
-          <p class="values-progress-label" id="valuesProgressLabel">Value 01</p>
-          <div class="values-progress-track">
-            <div class="values-progress-fill" id="valuesProgressFill"></div>
-          </div>
-        </div>
-      </aside>
-
-      <div class="values-scenes" id="valuesScenes">
-        <article class="value-scene reveal">
-          <div class="value-scene-head">
-            <p class="value-scene-index">01</p>
-            <span class="value-scene-chip">Fire First</span>
-          </div>
-          <h3>Fire & Authenticity</h3>
-          <p class="value-scene-body">Real charcoal. Traditional grilling techniques. We never shortcut the flame, because the fire is where the flavour begins.</p>
-          <p class="value-scene-proof">Proof · Live fire grills at every branch</p>
-        </article>
-
-        <article class="value-scene reveal">
-          <div class="value-scene-head">
-            <p class="value-scene-index">02</p>
-            <span class="value-scene-chip">No Compromise</span>
-          </div>
-          <h3>Quality Without Compromise</h3>
-          <p class="value-scene-body">Premium cuts, fresh banchan prepared daily, and marinades rooted in Korean tradition. If it does not meet our standard, it does not reach your table.</p>
-          <p class="value-scene-proof">Proof · Daily prep, strict quality checks</p>
-        </article>
-
-        <article class="value-scene reveal">
-          <div class="value-scene-head">
-            <p class="value-scene-index">03</p>
-            <span class="value-scene-chip">Shared Table</span>
-          </div>
-          <h3>Gathering & Community</h3>
-          <p class="value-scene-body">Korean BBQ is built for sharing. We create spaces where friends, families, and first-timers become regulars over sizzling meat and conversation.</p>
-          <p class="value-scene-proof">Proof · Group-friendly layouts across all locations</p>
-        </article>
-
-        <article class="value-scene reveal">
-          <div class="value-scene-head">
-            <p class="value-scene-index">04</p>
-            <span class="value-scene-chip">Warm Service</span>
-          </div>
-          <h3>Warm Hospitality</h3>
-          <p class="value-scene-body">From your first greeting to your final round, every guest is treated like family. Attentive, genuine service with no rush and no ego.</p>
-          <p class="value-scene-proof">Proof · Hospitality standards across every shift</p>
-        </article>
-
-        <article class="value-scene reveal">
-          <div class="value-scene-head">
-            <p class="value-scene-index">05</p>
-            <span class="value-scene-chip">Purposeful Scale</span>
-          </div>
-          <h3>Thoughtful Growth</h3>
-          <p class="value-scene-body">We expand deliberately. Every new branch earns its place, and growth never comes at the cost of quality, consistency, or soul.</p>
-          <p class="value-scene-proof">Proof · 5 branches, one consistent standard</p>
-        </article>
-
-        <article class="value-scene reveal">
-          <div class="value-scene-head">
-            <p class="value-scene-index">06</p>
-            <span class="value-scene-chip">Rooted in Culture</span>
-          </div>
-          <h3>Honouring Tradition</h3>
-          <p class="value-scene-body">We respect the roots of Korean cuisine while embracing modern Melbourne dining. Tradition and innovation live side by side at the grill.</p>
-          <p class="value-scene-proof">Proof · Korean core menu with modern service flow</p>
-        </article>
       </div>
     </div>
   </div>
@@ -1838,7 +1724,6 @@
     <p class="food-empty" id="foodEmpty" hidden>No dishes in this category — try another filter.</p>
 
     <div class="food-cta reveal">
-      <p class="food-cta-note">All-you-can-eat and à la carte available · menus vary by location</p>
       <a class="btn-primary" href="#experience">Book a Table</a>
       <a class="btn-outline" href="#story">Find a Location</a>
     </div>
@@ -2129,8 +2014,8 @@
         chapter: 'Location 01',
         mode: 'AYCE',
         title: 'BBQ-K Springvale',
-        text: 'A lively AYCE branch packed with full-flame Korean BBQ energy, ideal for groups, celebrations, and big appetites.',
-        tag: 'All You Can Eat · Group Favourite',
+        text: 'High-energy AYCE for group nights and full-flame Korean BBQ.',
+        tag: 'AYCE · Group Favourite',
         imageBase: 'springvale',
         focus: 'center 58%',
         tint: 'rgba(212,43,43,0.22)'
@@ -2140,8 +2025,8 @@
         chapter: 'Location 02',
         mode: 'A la Carte',
         title: 'BBQ-K Doncaster',
-        text: 'An A la Carte destination with a polished dining pace, curated cuts, and a premium setting for intentional BBQ nights.',
-        tag: 'A la Carte · Refined Dining',
+        text: 'Refined A la Carte branch for curated cuts and slower dining.',
+        tag: 'A la Carte · Premium',
         imageBase: 'doncaster',
         focus: 'center 52%',
         tint: 'rgba(245,166,35,0.2)'
@@ -2151,8 +2036,8 @@
         chapter: 'Location 03',
         mode: 'AYCE',
         title: 'BBQ-K Endeavour Hill',
-        text: 'A neighbourhood AYCE hotspot with generous rounds, family-friendly seating, and the signature BBQ-K fire at every table.',
-        tag: 'All You Can Eat · Family Friendly',
+        text: 'Neighbourhood AYCE hotspot with generous rounds and family seating.',
+        tag: 'AYCE · Family Friendly',
         imageBase: 'endeavour-hill',
         focus: 'center 45%',
         tint: 'rgba(212,43,43,0.28)'
@@ -2162,8 +2047,8 @@
         chapter: 'Location 04',
         mode: 'A la Carte',
         title: 'BBQ-K Box Hill',
-        text: 'A modern A la Carte branch built for selective ordering, premium cuts, and a cleaner, elevated Korean BBQ experience.',
-        tag: 'A la Carte · Premium Sets',
+        text: 'Modern A la Carte setting for selective ordering and premium sets.',
+        tag: 'A la Carte · Curated Sets',
         imageBase: 'box-hill',
         focus: 'center 35%',
         tint: 'rgba(245,166,35,0.22)'
@@ -2173,8 +2058,8 @@
         chapter: 'Location 05',
         mode: 'AYCE',
         title: 'BBQ-K Brimbank',
-        text: 'Our AYCE Brimbank branch brings high-energy service, full menu rounds, and late-night BBQ comfort to the west side.',
-        tag: 'All You Can Eat · East Side Favourite',
+        text: 'West-side AYCE branch with full rounds and late-night BBQ comfort.',
+        tag: 'AYCE · West Side',
         imageBase: 'brimbank',
         focus: 'center 42%',
         tint: 'rgba(212,43,43,0.24)'
@@ -2257,41 +2142,6 @@
     renderChapter(0);
   }
 
-  const valuesScenes = Array.from(document.querySelectorAll('#valuesScenes .value-scene'));
-  if (valuesScenes.length) {
-    const valuesLiveLabel = document.getElementById('valuesLiveLabel');
-    const valuesLiveTitle = document.getElementById('valuesLiveTitle');
-    const valuesLiveText = document.getElementById('valuesLiveText');
-    const valuesProgressLabel = document.getElementById('valuesProgressLabel');
-    const valuesProgressFill = document.getElementById('valuesProgressFill');
-
-    const setActiveValue = (index) => {
-      const activeIndex = Math.max(0, Math.min(index, valuesScenes.length - 1));
-      const activeScene = valuesScenes[activeIndex];
-      const title = activeScene.querySelector('h3')?.textContent?.trim() || '';
-      const text = activeScene.querySelector('.value-scene-body')?.textContent?.trim() || '';
-      const current = String(activeIndex + 1).padStart(2, '0');
-      const total = String(valuesScenes.length).padStart(2, '0');
-
-      valuesScenes.forEach((scene, idx) => scene.classList.toggle('is-active', idx === activeIndex));
-      if (valuesLiveLabel) valuesLiveLabel.textContent = `Now Showing · ${current} / ${total}`;
-      if (valuesLiveTitle) valuesLiveTitle.textContent = title;
-      if (valuesLiveText) valuesLiveText.textContent = text;
-      if (valuesProgressLabel) valuesProgressLabel.textContent = `Value ${current}`;
-      if (valuesProgressFill) valuesProgressFill.style.width = `${((activeIndex + 1) / valuesScenes.length) * 100}%`;
-    };
-
-    const valuesObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const idx = valuesScenes.indexOf(entry.target);
-        if (idx >= 0) setActiveValue(idx);
-      });
-    }, { threshold: 0.55, rootMargin: '-20% 0px -35% 0px' });
-
-    valuesScenes.forEach(scene => valuesObserver.observe(scene));
-    setActiveValue(0);
-  }
 </script>
 </body>
 </html>
