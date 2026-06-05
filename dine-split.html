@@ -1,0 +1,3339 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BBQ-K — Korean BBQ · Split View</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ultra&family=Black+Han+Sans&family=Barlow:wght@400;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --red: #d42b2b;
+        --red-dk: #a01e1e;
+        --red-lt: #ff4444;
+        --char: #1a1a1a;
+        --char2: #2c2c2c;
+        --gold: #f5a623;
+        --cream: #fff8f0;
+        --white: #ffffff;
+        --smoke: #3a3a3a;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      body {
+        font-family: "Barlow", sans-serif;
+        background: var(--char);
+        color: var(--white);
+        overflow-x: hidden;
+      }
+
+      /* Ultra is reserved for key labels and brand marks */
+      .nav-logo,
+      .section-label,
+      .story-stage-kicker,
+      .story-stage-tag,
+      .story-progress-label,
+      .story-stat-label,
+      .story-year-chip,
+      .story-detail-meta,
+      .food-filter-chip,
+      .food-reel-hint,
+      .food-badge,
+      .food-card-label h5,
+      .food-card-label p,
+      .split-kicker,
+      .split-branch-name,
+      .bottom-strip p {
+        font-family: "Ultra", serif !important;
+        font-weight: 400;
+      }
+
+      /* scroll progress */
+      .scroll-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        width: 0%;
+        background: linear-gradient(90deg, var(--red), var(--gold));
+        z-index: 200;
+        transition: width 0.14s ease-out;
+        box-shadow: 0 0 12px rgba(212, 43, 43, 0.5);
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 48px;
+        height: 64px;
+        background: transparent;
+        transition:
+          background 0.35s,
+          border-color 0.35s;
+        border-bottom: 1px solid transparent;
+      }
+
+      nav.scrolled {
+        background: rgba(26, 26, 26, 0.95);
+        backdrop-filter: blur(8px);
+        border-bottom-color: rgba(212, 43, 43, 0.3);
+      }
+
+      .nav-logo {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: 28px;
+        color: var(--red);
+        letter-spacing: 2px;
+        text-decoration: none;
+      }
+
+      .nav-logo span {
+        color: var(--gold);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        list-style: none;
+      }
+
+      .nav-links a {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.75);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .nav-links a:hover {
+        color: var(--gold);
+      }
+
+      .nav-cta {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--white);
+        background: var(--red);
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+
+      .nav-cta:hover {
+        background: var(--red-lt);
+      }
+
+      /* ── VIDEO HERO ── */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 100px 24px 60px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        transform: scale(1.08);
+        transform-origin: center center;
+        will-change: transform;
+      }
+
+      .hero-overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+          linear-gradient(
+            to bottom,
+            rgba(26, 26, 26, 0.55) 0%,
+            rgba(26, 26, 26, 0.72) 50%,
+            rgba(26, 26, 26, 0.92) 100%
+          ),
+          radial-gradient(
+            ellipse 70% 60% at 50% 40%,
+            rgba(212, 43, 43, 0.15) 0%,
+            transparent 70%
+          );
+        pointer-events: none;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 820px;
+      }
+
+      .hero-eyebrow {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 20px;
+        animation: fadeUp 0.6s ease both;
+      }
+
+      .hero-title {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: clamp(72px, 14vw, 148px);
+        line-height: 0.9;
+        color: var(--white);
+        animation: fadeUp 0.6s 0.1s ease both;
+      }
+
+      .hero-title .k {
+        color: var(--red);
+      }
+      .hero-title .dash {
+        color: var(--gold);
+      }
+
+      .hero-sub {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(18px, 3vw, 26px);
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 16px;
+        animation: fadeUp 0.6s 0.2s ease both;
+      }
+
+      .hero-divider {
+        width: 60px;
+        height: 3px;
+        background: var(--red);
+        margin: 32px auto;
+        animation: fadeUp 0.6s 0.3s ease both;
+      }
+
+      .hero-intro {
+        font-size: 17px;
+        line-height: 1.75;
+        color: rgba(255, 255, 255, 0.78);
+        animation: fadeUp 0.6s 0.4s ease both;
+      }
+
+      .hero-intro strong {
+        color: var(--gold);
+        font-weight: 700;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 36px;
+        animation: fadeUp 0.6s 0.5s ease both;
+      }
+
+      .btn-primary {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--white);
+        background: var(--red);
+        padding: 14px 28px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+
+      .btn-primary:hover {
+        background: var(--red-lt);
+        transform: translateY(-2px);
+      }
+
+      .btn-outline {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--white);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        padding: 14px 28px;
+        border-radius: 4px;
+        text-decoration: none;
+        transition:
+          border-color 0.2s,
+          color 0.2s;
+      }
+
+      .btn-outline:hover {
+        border-color: var(--gold);
+        color: var(--gold);
+      }
+
+      .scroll-cue {
+        margin-top: 48px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .scroll-cue span {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+      }
+
+      .scroll-cue-line {
+        width: 1px;
+        height: 48px;
+        background: linear-gradient(to bottom, var(--gold), transparent);
+        animation: scrollPulse 2s ease-in-out infinite;
+      }
+
+      /* hero → story bridge */
+      .hero-fade {
+        height: 120px;
+        margin-top: -120px;
+        position: relative;
+        z-index: 3;
+        background: linear-gradient(to bottom, transparent, var(--char));
+        pointer-events: none;
+      }
+
+      .story-marquee {
+        background: var(--char);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 14px 0;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .story-marquee-inner {
+        display: inline-flex;
+        animation: marquee 28s linear infinite;
+      }
+
+      .story-marquee-item {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+        padding: 0 28px;
+      }
+
+      .story-marquee-item strong {
+        color: var(--gold);
+        font-weight: 700;
+      }
+
+      /* ── SECTION COMMON ── */
+      .section-label {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 12px;
+      }
+
+      .section-title {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: clamp(32px, 5vw, 52px);
+        line-height: 1.05;
+        color: var(--white);
+        margin-bottom: 16px;
+      }
+
+      .section-title em {
+        font-style: normal;
+        color: var(--red);
+      }
+
+      .section-desc {
+        font-size: 16px;
+        line-height: 1.75;
+        color: rgba(255, 255, 255, 0.55);
+        max-width: 560px;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition:
+          opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .reveal-left {
+        opacity: 0;
+        transform: translateX(-32px);
+        transition:
+          opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .reveal-left.visible {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .reveal-scale {
+        opacity: 0;
+        transform: scale(0.94);
+        transition:
+          opacity 0.95s ease,
+          transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .reveal-scale.visible {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      .stagger-children.visible > * {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .stagger-children > * {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+          transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .stagger-children > *:nth-child(1) {
+        transition-delay: 0.08s;
+      }
+      .stagger-children > *:nth-child(2) {
+        transition-delay: 0.17s;
+      }
+      .stagger-children > *:nth-child(3) {
+        transition-delay: 0.26s;
+      }
+      .stagger-children > *:nth-child(4) {
+        transition-delay: 0.35s;
+      }
+      .stagger-children > *:nth-child(5) {
+        transition-delay: 0.44s;
+      }
+      .stagger-children > *:nth-child(6) {
+        transition-delay: 0.53s;
+      }
+
+      /* ── STORY ── */
+      .story-section {
+        padding: 100px 0 100px 48px;
+        background: var(--char);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .story-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 55%;
+        height: 100%;
+        background: radial-gradient(
+          ellipse 80% 60% at 100% 30%,
+          rgba(212, 43, 43, 0.08) 0%,
+          transparent 65%
+        );
+        pointer-events: none;
+      }
+
+      .story-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .story-layout {
+        display: block;
+      }
+
+      .story-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        margin-bottom: 20px;
+      }
+
+      .story-intro {
+        max-width: 560px;
+      }
+
+      .story-intro .section-desc {
+        max-width: 500px;
+      }
+
+      .story-stats {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+
+      .story-stat {
+        padding: 14px 14px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
+        transition:
+          border-color 0.25s,
+          transform 0.25s;
+        min-width: 120px;
+      }
+
+      .story-stat:hover {
+        border-color: rgba(212, 43, 43, 0.35);
+        transform: translateY(-2px);
+      }
+
+      .story-stat-num {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: 30px;
+        color: var(--red);
+        display: block;
+        line-height: 1;
+      }
+
+      .story-stat-label {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.45);
+        margin-top: 4px;
+        display: block;
+      }
+
+      .story-scroll-hint {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+      }
+
+      .story-scroll-hint .arrow-hint {
+        animation: nudgeRight 1.5s ease-in-out infinite;
+      }
+
+      .story-track-wrap {
+        position: relative;
+        padding-bottom: 8px;
+      }
+
+      .story-cinematic {
+        margin-right: 48px;
+      }
+
+      .story-stage {
+        min-height: 460px;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        position: relative;
+        background: #181818;
+        box-shadow: 0 24px 56px rgba(0, 0, 0, 0.4);
+      }
+
+      .story-stage-media {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 20% 80%,
+            rgba(212, 43, 43, 0.2) 0%,
+            transparent 70%
+          ),
+          linear-gradient(
+            135deg,
+            rgba(26, 26, 26, 0.6),
+            rgba(26, 26, 26, 0.25)
+          ),
+          url("assets/hero-poster.jpg") center/cover no-repeat;
+        transition:
+          transform 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+          filter 0.95s;
+        transform: scale(1.06);
+        filter: saturate(1.1);
+      }
+
+      .story-stage.is-swapping .story-stage-media {
+        transform: scale(1.02);
+        filter: saturate(1.2);
+      }
+
+      .story-stage::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(
+            to top,
+            rgba(20, 20, 20, 0.94) 0%,
+            rgba(20, 20, 20, 0.72) 40%,
+            rgba(20, 20, 20, 0.28) 100%
+          ),
+          linear-gradient(
+            to right,
+            rgba(20, 20, 20, 0.75) 0%,
+            rgba(20, 20, 20, 0.2) 55%,
+            rgba(20, 20, 20, 0.75) 100%
+          );
+        pointer-events: none;
+      }
+
+      .story-stage-content {
+        position: relative;
+        z-index: 2;
+        padding: 42px 40px 34px;
+        max-width: 670px;
+        transition:
+          opacity 0.46s ease,
+          transform 0.46s ease;
+      }
+
+      .story-stage.is-swapping .story-stage-content {
+        opacity: 0.15;
+        transform: translateY(6px);
+      }
+
+      .story-stage-kicker {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 14px;
+      }
+
+      .story-stage-title {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: clamp(34px, 5vw, 54px);
+        line-height: 0.98;
+        margin-bottom: 16px;
+      }
+
+      .story-stage-text {
+        font-size: 16px;
+        line-height: 1.75;
+        color: rgba(255, 255, 255, 0.72);
+        max-width: 620px;
+        margin-bottom: 18px;
+      }
+
+      .story-stage-tag {
+        display: inline-block;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gold);
+        background: rgba(245, 166, 35, 0.14);
+        border: 1px solid rgba(245, 166, 35, 0.3);
+        padding: 7px 12px;
+        border-radius: 4px;
+      }
+
+      .story-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin: 18px 0;
+      }
+
+      .story-year-chips {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .story-year-chip {
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.02);
+        color: rgba(255, 255, 255, 0.5);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.32s ease;
+      }
+
+      .story-year-chip.is-active,
+      .story-year-chip:hover {
+        border-color: rgba(212, 43, 43, 0.6);
+        color: var(--gold);
+        background: rgba(212, 43, 43, 0.2);
+      }
+
+      .story-progress {
+        min-width: 210px;
+      }
+
+      .story-progress-label {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+        margin-bottom: 8px;
+        text-align: right;
+      }
+
+      .story-progress-track {
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        overflow: hidden;
+      }
+
+      .story-progress-fill {
+        width: 20%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--red), var(--gold));
+        transition: width 0.62s ease;
+      }
+
+      .story-track-controls {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin: 0;
+      }
+
+      .story-track-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.04);
+        color: rgba(255, 255, 255, 0.8);
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 20px;
+        line-height: 1;
+        cursor: pointer;
+        transition:
+          border-color 0.3s,
+          background 0.3s,
+          color 0.3s,
+          transform 0.3s;
+      }
+
+      .story-track-btn:hover:not(:disabled) {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-1px);
+      }
+
+      .story-track-btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+
+      .story-detail-panel {
+        margin: 14px 0 0;
+        padding: 18px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        background: linear-gradient(
+          120deg,
+          rgba(255, 255, 255, 0.03),
+          rgba(212, 43, 43, 0.08)
+        );
+      }
+
+      .story-detail-panel h4 {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: 24px;
+        line-height: 1.1;
+        margin-bottom: 8px;
+      }
+
+      .story-detail-panel p {
+        font-size: 14px;
+        line-height: 1.65;
+        color: rgba(255, 255, 255, 0.62);
+        margin-bottom: 10px;
+      }
+
+      .story-detail-meta {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      /* ── SPLIT DINING (Option 2) ── */
+      .split-section {
+        position: relative;
+        overflow: hidden;
+        padding: 72px 0 0 48px;
+        background: var(--char);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .split-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+        padding-bottom: 28px;
+      }
+
+      .split-wrap {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: min(78vh, 820px);
+      }
+
+      .split-or {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 20;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Black Han Sans", sans-serif;
+        font-size: 14px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.7);
+        background: var(--char);
+        border: 2px solid rgba(255, 255, 255, 0.18);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+        pointer-events: none;
+      }
+
+      .split-panel {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+        min-height: 520px;
+      }
+
+      .split-media {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(135deg, rgba(26, 26, 26, 0.5), rgba(26, 26, 26, 0.3)),
+          url("assets/hero-poster.jpg") center/cover no-repeat;
+        transform: scale(1.05);
+        transition:
+          transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+          filter 0.55s;
+        filter: saturate(1.05);
+      }
+
+      .split-panel.has-photo .split-media {
+        filter: saturate(1.12);
+      }
+
+      .split-panel:hover .split-media,
+      .split-panel:focus-within .split-media {
+        transform: scale(1.09);
+        filter: saturate(1.2);
+      }
+
+      .split-shade {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+      .split-panel.ayce .split-shade {
+        background:
+          linear-gradient(
+            to top,
+            rgba(16, 16, 16, 0.96) 0%,
+            rgba(16, 16, 16, 0.55) 38%,
+            rgba(16, 16, 16, 0.15) 68%,
+            rgba(16, 16, 16, 0.35) 100%
+          ),
+          linear-gradient(to right, rgba(212, 43, 43, 0.22), transparent 50%);
+      }
+
+      .split-panel.ala .split-shade {
+        background:
+          linear-gradient(
+            to top,
+            rgba(16, 16, 16, 0.96) 0%,
+            rgba(16, 16, 16, 0.55) 38%,
+            rgba(16, 16, 16, 0.15) 68%,
+            rgba(16, 16, 16, 0.35) 100%
+          ),
+          linear-gradient(to left, rgba(245, 166, 35, 0.18), transparent 50%);
+      }
+
+      .split-panel.ayce {
+        border-right: 1px solid rgba(212, 43, 43, 0.25);
+      }
+      .split-panel.ala {
+        border-left: 1px solid rgba(245, 166, 35, 0.25);
+      }
+
+      .split-content {
+        position: relative;
+        z-index: 2;
+        padding: 48px 40px 40px;
+        max-width: 520px;
+      }
+
+      .split-panel.ala .split-content {
+        margin-left: auto;
+        text-align: right;
+      }
+
+      .split-kicker {
+        display: inline-block;
+        font-family: "Barlow Condensed", sans-serif !important;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 6px 12px;
+        border-radius: 999px;
+        margin-bottom: 14px;
+      }
+
+      .split-panel.ayce .split-kicker {
+        color: #ff7070;
+        background: rgba(212, 43, 43, 0.2);
+        border: 1px solid rgba(212, 43, 43, 0.4);
+      }
+
+      .split-panel.ala .split-kicker {
+        color: var(--gold);
+        background: rgba(245, 166, 35, 0.16);
+        border: 1px solid rgba(245, 166, 35, 0.35);
+      }
+
+      .split-title {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: clamp(34px, 4.5vw, 52px);
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+
+      .split-hook {
+        font-size: clamp(16px, 2vw, 19px);
+        font-weight: 600;
+        line-height: 1.45;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 8px;
+      }
+
+      .split-sub {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.45);
+        margin-bottom: 22px;
+      }
+
+      .split-steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 24px;
+      }
+
+      .split-panel.ala .split-steps {
+        justify-content: flex-end;
+      }
+
+      .split-step {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.68);
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .split-branches {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+
+      .split-panel.ala .split-branches {
+        justify-content: flex-end;
+      }
+
+      .split-branch {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: inherit;
+        padding: 6px 12px 6px 6px;
+        border-radius: 999px;
+        background: rgba(26, 26, 26, 0.55);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(6px);
+        transition:
+          border-color 0.2s,
+          transform 0.2s,
+          background 0.2s;
+        cursor: pointer;
+      }
+
+      .split-branch:hover {
+        transform: translateY(-2px);
+        background: rgba(26, 26, 26, 0.78);
+      }
+
+      .split-panel.ayce .split-branch:hover {
+        border-color: var(--red);
+      }
+      .split-panel.ala .split-branch:hover {
+        border-color: var(--gold);
+      }
+
+      .split-branch:focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: 2px;
+      }
+
+      .split-branch-thumb {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: var(--char2);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .split-branch-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.35s;
+      }
+
+      .split-branch-thumb.has-photo img {
+        opacity: 1;
+      }
+
+      .split-branch-name {
+        font-family: "Barlow Condensed", sans-serif !important;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .split-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2.5px;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.55);
+        transition:
+          color 0.2s,
+          gap 0.2s;
+        cursor: pointer;
+      }
+
+      .split-panel.ayce .split-cta:hover {
+        color: #ff7070;
+      }
+      .split-panel.ala .split-cta:hover {
+        color: var(--gold);
+      }
+      .split-cta:hover {
+        gap: 14px;
+      }
+
+      .split-cta-arrow {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        transition: transform 0.2s;
+      }
+
+      .split-panel.ayce .split-cta-arrow {
+        background: var(--red);
+        color: var(--white);
+      }
+      .split-panel.ala .split-cta-arrow {
+        background: var(--gold);
+        color: var(--char);
+      }
+      .split-cta:hover .split-cta-arrow {
+        transform: translateX(3px);
+      }
+
+      @media (max-width: 900px) {
+        .story-section {
+          padding: 72px 20px;
+        }
+        .story-topbar {
+          flex-direction: column;
+          align-items: flex-start;
+          margin-bottom: 16px;
+        }
+        .story-stats {
+          justify-content: flex-start;
+          width: 100%;
+        }
+        .story-cinematic {
+          margin-right: 0;
+        }
+        .story-stage {
+          min-height: 420px;
+        }
+        .story-stage-content {
+          padding: 28px 24px;
+        }
+        .story-meta {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .story-progress-label {
+          text-align: left;
+        }
+        .story-detail-panel {
+          margin: 12px 0 0;
+        }
+      }
+
+      /* ── VALUES ── */
+      .values-section {
+        padding: 100px 48px;
+        background: var(--char2);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .values-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+
+      .values-layout {
+        display: grid;
+        grid-template-columns: minmax(280px, 380px) 1fr;
+        gap: 42px;
+        align-items: start;
+      }
+
+      .values-sticky {
+        position: sticky;
+        top: 96px;
+        padding-right: 20px;
+      }
+
+      .values-kicker {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 14px;
+      }
+
+      .values-manifesto {
+        margin: 26px 0;
+        padding: 22px 0 22px 18px;
+        border-left: 3px solid var(--red);
+      }
+
+      .values-manifesto p {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: clamp(20px, 2.4vw, 28px);
+        line-height: 1.35;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .values-live {
+        margin-top: 22px;
+        padding: 16px 18px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .values-live-label {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+        margin-bottom: 8px;
+      }
+
+      .values-live-title {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: 28px;
+        line-height: 1.05;
+        margin-bottom: 8px;
+      }
+
+      .values-live-text {
+        font-size: 14px;
+        line-height: 1.65;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .values-progress {
+        margin-top: 22px;
+      }
+
+      .values-progress-label {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+        margin-bottom: 8px;
+      }
+
+      .values-progress-track {
+        height: 4px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+        overflow: hidden;
+      }
+
+      .values-progress-fill {
+        width: 16.66%;
+        height: 100%;
+        background: linear-gradient(90deg, var(--red), var(--gold));
+        transition: width 0.62s ease;
+      }
+
+      .values-scenes {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .value-scene {
+        position: relative;
+        background: var(--char);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        overflow: hidden;
+        padding: 30px 26px 24px;
+        transition:
+          border-color 0.42s,
+          transform 0.42s,
+          box-shadow 0.42s;
+      }
+
+      .value-scene::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--red), var(--gold));
+        transform: scaleX(0.22);
+        transform-origin: left;
+        transition: transform 0.48s ease;
+      }
+
+      .value-scene.is-active {
+        border-color: rgba(212, 43, 43, 0.45);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.32);
+        transform: translateY(-2px);
+      }
+
+      .value-scene.is-active::before {
+        transform: scaleX(1);
+      }
+
+      .value-scene-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+
+      .value-scene-index {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: 52px;
+        line-height: 1;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(212, 43, 43, 0.4);
+        transition:
+          color 0.45s,
+          -webkit-text-stroke 0.45s;
+      }
+
+      .value-scene.is-active .value-scene-index {
+        color: var(--red);
+        -webkit-text-stroke: 0;
+      }
+
+      .value-scene-chip {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--gold);
+        background: rgba(245, 166, 35, 0.13);
+        border: 1px solid rgba(245, 166, 35, 0.28);
+        border-radius: 4px;
+        padding: 6px 9px;
+        white-space: nowrap;
+      }
+
+      .value-scene h3 {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: clamp(24px, 3vw, 34px);
+        line-height: 1.05;
+        margin-bottom: 10px;
+      }
+
+      .value-scene p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.62);
+        max-width: 760px;
+      }
+
+      .value-scene-proof {
+        margin-top: 10px;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 12px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.34);
+      }
+
+      /* ── FOOD STRIP ── */
+      .food-strip-section {
+        padding: 86px 0 74px;
+        background: var(--char);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .food-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 48px;
+      }
+
+      .food-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 24px;
+        margin-bottom: 22px;
+      }
+
+      .food-heading p.section-label {
+        margin-bottom: 10px;
+      }
+
+      .food-heading .section-desc {
+        max-width: 520px;
+        font-size: 15px;
+      }
+
+      .food-filters {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+
+      .food-filter-chip {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.02);
+        color: rgba(255, 255, 255, 0.52);
+        padding: 7px 12px;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        transition:
+          border-color 0.28s ease,
+          background 0.28s ease,
+          color 0.28s ease;
+      }
+
+      .food-filter-chip:hover {
+        border-color: rgba(255, 255, 255, 0.22);
+        color: rgba(255, 255, 255, 0.72);
+      }
+
+      .food-filter-chip:focus-visible {
+        outline: 2px solid var(--gold);
+        outline-offset: 2px;
+      }
+
+      .food-filter-chip.is-active {
+        border-color: rgba(212, 43, 43, 0.45);
+        background: rgba(212, 43, 43, 0.14);
+        color: var(--gold);
+      }
+
+      .food-card.is-hidden {
+        display: none;
+      }
+
+      .food-empty {
+        margin: 18px 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.4);
+        text-align: center;
+      }
+
+      .food-cta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-top: 36px;
+        padding-top: 8px;
+      }
+
+      .food-cta-note {
+        width: 100%;
+        text-align: center;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.45);
+        margin: 0 0 4px;
+      }
+
+      .food-reel-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .food-reel-hint {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+      }
+
+      .food-controls {
+        display: flex;
+        gap: 10px;
+      }
+
+      .food-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.03);
+        color: rgba(255, 255, 255, 0.8);
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 18px;
+        cursor: pointer;
+        transition: all 0.28s ease;
+      }
+
+      .food-btn:hover:not(:disabled) {
+        border-color: var(--gold);
+        color: var(--gold);
+        transform: translateY(-1px);
+      }
+
+      .food-btn:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+
+      .food-scroll-track {
+        display: flex;
+        gap: 18px;
+        overflow-x: auto;
+        padding: 8px 0 16px;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: thin;
+        scrollbar-color: var(--red) transparent;
+        cursor: grab;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-x;
+      }
+
+      .food-scroll-track:active {
+        cursor: grabbing;
+      }
+      .food-scroll-track::-webkit-scrollbar {
+        height: 4px;
+      }
+      .food-scroll-track::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .food-scroll-track::-webkit-scrollbar-thumb {
+        background: var(--red);
+        border-radius: 2px;
+      }
+
+      .food-card {
+        flex: 0 0 min(330px, 82vw);
+        scroll-snap-align: start;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #202020;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        position: relative;
+        z-index: 1;
+        transition:
+          transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+          border-color 0.42s,
+          box-shadow 0.42s,
+          z-index 0s;
+      }
+
+      .food-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        border: 1px solid transparent;
+        pointer-events: none;
+        transition: border-color 0.32s ease;
+        z-index: 3;
+      }
+
+      #foodTrack:not(:has(.food-card:hover)) .food-card.is-active {
+        border-color: rgba(212, 43, 43, 0.22);
+      }
+
+      #foodTrack:not(:has(.food-card:hover)) .food-card.is-active::before {
+        border-color: rgba(245, 166, 35, 0.14);
+      }
+
+      .food-card:hover {
+        z-index: 4;
+        transform: translateY(-6px);
+        border-color: rgba(212, 43, 43, 0.45);
+        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.35);
+      }
+
+      .food-card:hover::before {
+        border-color: rgba(245, 166, 35, 0.42);
+      }
+
+      .food-image-wrap {
+        position: relative;
+        width: 100%;
+        height: 280px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #3d1f1f 0%, #232323 100%);
+      }
+
+      .food-image-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition:
+          transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+          filter 0.6s;
+        filter: saturate(1.06);
+      }
+
+      #foodTrack:not(:has(.food-card:hover))
+        .food-card.is-active
+        .food-image-wrap
+        img {
+        transform: scale(1.02);
+        filter: saturate(1.1);
+      }
+
+      .food-card:hover .food-image-wrap img {
+        transform: scale(1.06);
+        filter: saturate(1.14);
+      }
+
+      .food-image-placeholder {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        font-size: 36px;
+        color: rgba(255, 255, 255, 0.28);
+        background: linear-gradient(
+          140deg,
+          rgba(212, 43, 43, 0.2),
+          rgba(32, 32, 32, 0.75)
+        );
+        transition: opacity 0.35s ease;
+        pointer-events: none;
+      }
+
+      .food-image-wrap.has-photo .food-image-placeholder {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .food-image-placeholder span {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.26);
+      }
+
+      .food-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 2;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        padding: 5px 9px;
+        border-radius: 999px;
+        background: rgba(20, 20, 20, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: var(--gold);
+        backdrop-filter: blur(2px);
+      }
+
+      .food-overlay {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        padding: 48px 16px 14px;
+        background: linear-gradient(
+          to top,
+          rgba(16, 16, 16, 0.95),
+          rgba(16, 16, 16, 0.04)
+        );
+        pointer-events: none;
+      }
+
+      .food-overlay h4 {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: 24px;
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+
+      .food-overlay p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.68);
+        line-height: 1.45;
+        max-width: 280px;
+      }
+
+      .food-card-label {
+        padding: 12px 14px 14px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .food-card-label h5 {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.45);
+      }
+
+      .food-card-label p {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: var(--gold);
+      }
+
+      /* ── CHOOSE ── */
+      .choose-section {
+        padding: 88px 48px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+
+      .choose-heading {
+        text-align: center;
+        margin-bottom: 56px;
+      }
+
+      .choose-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+
+      .choice-box {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        text-decoration: none;
+        display: block;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition:
+          transform 0.25s,
+          border-color 0.25s;
+        background: var(--char2);
+      }
+
+      .choice-box:hover {
+        transform: translateY(-6px);
+      }
+      .choice-box.ayce:hover {
+        border-color: var(--red);
+      }
+      .choice-box.ala:hover {
+        border-color: var(--gold);
+      }
+
+      .choice-box-top {
+        padding: 40px 36px 32px;
+      }
+
+      .choice-tag {
+        display: inline-block;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        padding: 4px 12px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+
+      .choice-box.ayce .choice-tag {
+        background: rgba(212, 43, 43, 0.18);
+        color: #ff7070;
+      }
+      .choice-box.ala .choice-tag {
+        background: rgba(245, 166, 35, 0.18);
+        color: var(--gold);
+      }
+
+      .choice-box h3 {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: clamp(28px, 3vw, 40px);
+        line-height: 1.05;
+        margin-bottom: 16px;
+      }
+
+      .choice-box p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.6);
+        max-width: 340px;
+      }
+
+      .choice-box-footer {
+        padding: 20px 36px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .choice-branches {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+      }
+
+      .choice-arrow {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+      }
+
+      .choice-box.ayce .choice-arrow {
+        background: var(--red);
+      }
+      .choice-box.ala .choice-arrow {
+        background: var(--gold);
+        color: var(--char);
+      }
+
+      .choice-emoji {
+        font-size: 52px;
+        position: absolute;
+        top: 28px;
+        right: 32px;
+        opacity: 0.18;
+      }
+
+      /* ── BOTTOM STRIP ── */
+      .bottom-strip {
+        background: var(--red-dk);
+        padding: 20px 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .bottom-strip p {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .bottom-strip .dot {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      footer {
+        padding: 40px 48px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .footer-logo {
+        font-family: "Black Han Sans", sans-serif;
+        font-size: 22px;
+        color: var(--red);
+      }
+      .footer-logo span {
+        color: var(--gold);
+      }
+      footer p {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.25);
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes scrollPulse {
+        0%,
+        100% {
+          opacity: 0.4;
+          transform: scaleY(0.85);
+        }
+        50% {
+          opacity: 1;
+          transform: scaleY(1);
+        }
+      }
+
+      @keyframes marquee {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      @keyframes nudgeRight {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        50% {
+          transform: translateX(6px);
+        }
+      }
+
+      @media (max-width: 900px) {
+        nav {
+          padding: 0 20px;
+        }
+        .nav-links {
+          display: none;
+        }
+        .split-section {
+          padding: 56px 20px 0;
+        }
+        .split-inner {
+          padding-bottom: 20px;
+        }
+        .split-wrap {
+          grid-template-columns: 1fr;
+          min-height: auto;
+        }
+        .split-panel {
+          min-height: 58vh;
+        }
+        .split-panel.ayce {
+          border-right: none;
+          border-bottom: 1px solid rgba(212, 43, 43, 0.25);
+        }
+        .split-panel.ala {
+          border-left: none;
+        }
+        .split-wrap .split-panel:first-child {
+          order: 1;
+        }
+        .split-or {
+          order: 2;
+          position: relative;
+          left: auto;
+          top: auto;
+          transform: none;
+          margin: -28px auto;
+        }
+        .split-wrap .split-panel:last-child {
+          order: 3;
+        }
+        .split-content {
+          padding: 40px 24px 32px;
+          max-width: none;
+        }
+        .split-panel.ala .split-content {
+          margin-left: 0;
+          text-align: left;
+        }
+        .split-panel.ala .split-steps,
+        .split-panel.ala .split-branches {
+          justify-content: flex-start;
+        }
+        .split-title {
+          font-size: 32px;
+        }
+        .food-inner {
+          padding: 0 20px;
+        }
+        .food-header {
+          flex-direction: column;
+          align-items: flex-start;
+          margin-bottom: 18px;
+        }
+        .food-filters {
+          gap: 6px;
+        }
+        .food-reel-meta {
+          margin-bottom: 10px;
+        }
+        .food-image-wrap {
+          height: 248px;
+        }
+        .food-overlay h4 {
+          font-size: 22px;
+        }
+        .food-overlay p {
+          font-size: 12px;
+        }
+        .values-section {
+          padding: 76px 20px;
+        }
+        .values-layout {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .values-sticky {
+          position: static;
+        }
+        .values-live-title {
+          font-size: 24px;
+        }
+        .choose-section,
+        .story-section,
+        .split-section,
+        .values-section {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .choose-grid {
+          grid-template-columns: 1fr;
+        }
+        footer {
+          flex-direction: column;
+          gap: 12px;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+    <nav id="nav">
+      <a class="nav-logo" href="#">BBQ<span>-K</span></a>
+      <ul class="nav-links">
+        <li><a href="#story">Locations</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#experience">Dine With Us</a></li>
+      </ul>
+      <a class="nav-cta" href="#experience">Reserve</a>
+    </nav>
+
+    <section class="hero">
+      <video
+        class="hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="assets/hero-poster.jpg"
+      >
+        <source src="assets/hero-cinematic.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">
+          Authentic Korean BBQ · 5 Locations · Melbourne
+        </p>
+        <h1 class="hero-title">
+          BBQ<span class="dash">-</span><span class="k">K</span>
+        </h1>
+        <p class="hero-sub">Fire. Flavour. Friends.</p>
+        <div class="hero-divider"></div>
+        <p class="hero-intro">
+          From a single grill to <strong>five locations</strong> across
+          Melbourne — BBQ-K brings the heart of Korean fire cooking to your
+          table. Watch the flames, taste the tradition, gather around the grill.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#experience">Book a Table</a>
+          <a class="btn-outline" href="#story">Our Locations</a>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#story" aria-label="Scroll to our locations">
+        <span>Discover our locations</span>
+        <div class="scroll-cue-line"></div>
+      </a>
+    </section>
+
+    <div class="hero-fade" aria-hidden="true"></div>
+
+    <div class="story-marquee" aria-hidden="true">
+      <div class="story-marquee-inner">
+        <span class="story-marquee-item"
+          ><strong>BBQ-K Springvale</strong></span
+        >
+        <span class="story-marquee-item">BBQ-K Doncaster</span>
+        <span class="story-marquee-item"
+          ><strong>BBQ-K Endeavour Hill</strong></span
+        >
+        <span class="story-marquee-item">BBQ-K Box Hill</span>
+        <span class="story-marquee-item"><strong>BBQ-K Brimbank</strong></span>
+        <span class="story-marquee-item">3 AYCE · 2 A la Carte</span>
+        <span class="story-marquee-item"
+          ><strong>BBQ-K Springvale</strong></span
+        >
+        <span class="story-marquee-item">BBQ-K Doncaster</span>
+        <span class="story-marquee-item"
+          ><strong>BBQ-K Endeavour Hill</strong></span
+        >
+        <span class="story-marquee-item">BBQ-K Box Hill</span>
+        <span class="story-marquee-item"><strong>BBQ-K Brimbank</strong></span>
+        <span class="story-marquee-item">3 AYCE · 2 A la Carte</span>
+      </div>
+    </div>
+
+    <section class="story-section" id="story">
+      <div class="story-inner">
+        <div class="story-layout">
+          <div class="story-topbar reveal">
+            <div class="story-intro">
+              <p class="section-label">Our Locations</p>
+              <h2 class="section-title">Explore All <em>5 Branches</em></h2>
+            </div>
+          </div>
+
+          <div class="story-track-wrap reveal-scale">
+            <div class="story-cinematic">
+              <div
+                class="story-stage"
+                id="storyStage"
+                tabindex="0"
+                aria-label="Cinematic BBQ-K locations"
+              >
+                <div class="story-stage-media" id="storyStageMedia"></div>
+                <div class="story-stage-content">
+                  <p class="story-stage-kicker" id="storyStageKicker">
+                    Location 01 · AYCE
+                  </p>
+                  <h3 class="story-stage-title" id="storyStageTitle">
+                    BBQ-K Springvale
+                  </h3>
+                  <p class="story-stage-text" id="storyStageText">
+                    High-energy AYCE for group nights and full-flame Korean BBQ.
+                  </p>
+                  <span class="story-stage-tag" id="storyStageTag"
+                    >AYCE · Group Favourite</span
+                  >
+                </div>
+              </div>
+
+              <div class="story-meta">
+                <div class="story-year-chips" id="storyYearChips">
+                  <button
+                    class="story-year-chip is-active"
+                    type="button"
+                    data-story-target="0"
+                  >
+                    Springvale
+                  </button>
+                  <button
+                    class="story-year-chip"
+                    type="button"
+                    data-story-target="1"
+                  >
+                    Doncaster
+                  </button>
+                  <button
+                    class="story-year-chip"
+                    type="button"
+                    data-story-target="2"
+                  >
+                    Endeavour Hill
+                  </button>
+                  <button
+                    class="story-year-chip"
+                    type="button"
+                    data-story-target="3"
+                  >
+                    Box Hill
+                  </button>
+                  <button
+                    class="story-year-chip"
+                    type="button"
+                    data-story-target="4"
+                  >
+                    Brimbank
+                  </button>
+                </div>
+                <div class="story-progress">
+                  <p class="story-progress-label" id="storyProgressLabel">
+                    Location 01
+                  </p>
+                  <div class="story-progress-track">
+                    <div
+                      class="story-progress-fill"
+                      id="storyProgressFill"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="story-meta">
+              <p class="story-scroll-hint">
+                <span>Move between branches</span>
+              </p>
+              <div
+                class="story-track-controls"
+                aria-label="Story track controls"
+              >
+                <button
+                  class="story-track-btn"
+                  id="storyPrev"
+                  type="button"
+                  aria-label="Previous location"
+                >
+                  ←
+                </button>
+                <button
+                  class="story-track-btn"
+                  id="storyNext"
+                  type="button"
+                  aria-label="Next location"
+                >
+                  →
+                </button>
+              </div>
+            </div>
+            <div class="story-detail-panel" id="storyDetailPanel">
+              <h4 id="storyDetailTitle">BBQ-K Springvale</h4>
+              <p id="storyDetailText">
+                High-energy AYCE for group nights and full-flame Korean BBQ.
+              </p>
+              <p class="story-detail-meta" id="storyDetailMeta">
+                Springvale · Location 01 · AYCE · Group Favourite
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="split-section" id="experience">
+      <div class="split-inner">
+        <div class="story-topbar reveal">
+          <div class="story-intro">
+            <p class="section-label">How Dining Works</p>
+            <h2 class="section-title">How Do You<br /><em>Want to Eat?</em></h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="split-wrap reveal-scale">
+        <article class="split-panel ayce" id="splitAyce">
+          <div class="split-media" id="splitAyceMedia" aria-hidden="true"></div>
+          <div class="split-shade" aria-hidden="true"></div>
+          <div class="split-content">
+            <span class="split-kicker">3 Branches · AYCE</span>
+            <h3 class="split-title">All You Can Eat</h3>
+            <p class="split-hook">One price. Unlimited rounds.</p>
+            <p class="split-sub">
+              Pay once per person · order until you're full
+            </p>
+            <div class="split-steps">
+              <span class="split-step">1 · Choose package</span>
+              <span class="split-step">2 · Order rounds</span>
+            </div>
+            <div class="split-branches" aria-label="AYCE branches">
+              <a
+                class="split-branch"
+                href="#story"
+                data-split-target="0"
+                data-image-base="springvale"
+              >
+                <span class="split-branch-thumb"
+                  ><img alt="" loading="lazy"
+                /></span>
+                <span class="split-branch-name">Springvale</span>
+              </a>
+              <a
+                class="split-branch"
+                href="#story"
+                data-split-target="2"
+                data-image-base="endeavour-hill"
+              >
+                <span class="split-branch-thumb"
+                  ><img alt="" loading="lazy"
+                /></span>
+                <span class="split-branch-name">Endeavour Hill</span>
+              </a>
+              <a
+                class="split-branch"
+                href="#story"
+                data-split-target="4"
+                data-image-base="brimbank"
+              >
+                <span class="split-branch-thumb"
+                  ><img alt="" loading="lazy"
+                /></span>
+                <span class="split-branch-name">Brimbank</span>
+              </a>
+            </div>
+            <a class="split-cta" href="#story" data-split-target="0">
+              <span>View AYCE locations</span>
+              <span class="split-cta-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+
+        <div class="split-or" aria-hidden="true">or</div>
+
+        <article class="split-panel ala" id="splitAla">
+          <div class="split-media" id="splitAlaMedia" aria-hidden="true"></div>
+          <div class="split-shade" aria-hidden="true"></div>
+          <div class="split-content">
+            <span class="split-kicker">2 Branches · À la Carte</span>
+            <h3 class="split-title">À la Carte</h3>
+            <p class="split-hook">Order dish by dish.</p>
+            <p class="split-sub">Pay only for what you order</p>
+            <div class="split-steps">
+              <span class="split-step">1 · Pick dishes</span>
+              <span class="split-step">2 · Pay as you go</span>
+            </div>
+            <div class="split-branches" aria-label="À la Carte branches">
+              <a
+                class="split-branch"
+                href="#story"
+                data-split-target="1"
+                data-image-base="doncaster"
+              >
+                <span class="split-branch-thumb"
+                  ><img alt="" loading="lazy"
+                /></span>
+                <span class="split-branch-name">Doncaster</span>
+              </a>
+              <a
+                class="split-branch"
+                href="#story"
+                data-split-target="3"
+                data-image-base="box-hill"
+              >
+                <span class="split-branch-thumb"
+                  ><img alt="" loading="lazy"
+                /></span>
+                <span class="split-branch-name">Box Hill</span>
+              </a>
+            </div>
+            <a class="split-cta" href="#story" data-split-target="1">
+              <span>View À la Carte locations</span>
+              <span class="split-cta-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="food-strip-section" id="menu">
+      <div class="food-inner">
+        <div class="food-header reveal">
+          <div class="food-heading">
+            <p class="section-label">Menu Highlights</p>
+            <h2 class="section-title">Our Signature <em>Dishes</em></h2>
+            <p class="section-desc">
+              House favourites from the grill — premium cuts, bold marinades,
+              and Korean classics made for sharing.
+            </p>
+          </div>
+          <div
+            class="food-filters"
+            role="group"
+            aria-label="Filter dishes by category"
+          >
+            <button
+              type="button"
+              class="food-filter-chip is-active"
+              data-filter="all"
+              aria-pressed="true"
+            >
+              All
+            </button>
+            <button
+              type="button"
+              class="food-filter-chip"
+              data-filter="beef"
+              aria-pressed="false"
+            >
+              Beef
+            </button>
+            <button
+              type="button"
+              class="food-filter-chip"
+              data-filter="pork"
+              aria-pressed="false"
+            >
+              Pork
+            </button>
+            <button
+              type="button"
+              class="food-filter-chip"
+              data-filter="chicken"
+              aria-pressed="false"
+            >
+              Chicken
+            </button>
+            <button
+              type="button"
+              class="food-filter-chip"
+              data-filter="seafood"
+              aria-pressed="false"
+            >
+              Seafood
+            </button>
+            <button
+              type="button"
+              class="food-filter-chip"
+              data-filter="sides"
+              aria-pressed="false"
+            >
+              Sides
+            </button>
+            <button
+              type="button"
+              class="food-filter-chip"
+              data-filter="bowls"
+              aria-pressed="false"
+            >
+              Bowls
+            </button>
+          </div>
+        </div>
+
+        <div class="food-reel-meta">
+          <p class="food-reel-hint" id="foodReelHint">Swipe or use arrows</p>
+          <div class="food-controls">
+            <button
+              class="food-btn"
+              id="foodPrev"
+              type="button"
+              aria-label="Previous dish"
+              aria-controls="foodTrack"
+            >
+              ←
+            </button>
+            <button
+              class="food-btn"
+              id="foodNext"
+              type="button"
+              aria-label="Next dish"
+              aria-controls="foodTrack"
+            >
+              →
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="food-scroll-track"
+          id="foodTrack"
+          role="region"
+          aria-label="Signature dishes"
+          tabindex="0"
+        >
+          <article
+            class="food-card"
+            data-image-base="samgyeopsal"
+            data-category="pork"
+          >
+            <div class="food-image-wrap">
+              <img alt="Samgyeopsal at BBQ-K" />
+              <div class="food-image-placeholder">
+                🥩<span>Add dish photo</span>
+              </div>
+              <span class="food-badge">Best Seller</span>
+              <div class="food-overlay">
+                <h4>Samgyeopsal</h4>
+                <p>Thick-cut pork belly with deep smoky edges and rich bite.</p>
+              </div>
+            </div>
+            <div class="food-card-label">
+              <h5>Pork</h5>
+              <p>Signature Cut</p>
+            </div>
+          </article>
+
+          <article
+            class="food-card"
+            data-image-base="galbi"
+            data-category="beef"
+          >
+            <div class="food-image-wrap">
+              <img alt="Galbi at BBQ-K" />
+              <div class="food-image-placeholder">
+                🥓<span>Add dish photo</span>
+              </div>
+              <span class="food-badge">Premium</span>
+              <div class="food-overlay">
+                <h4>Galbi</h4>
+                <p>Soy-marinated short ribs caramelised over live flame.</p>
+              </div>
+            </div>
+            <div class="food-card-label">
+              <h5>Beef</h5>
+              <p>Fan Favourite</p>
+            </div>
+          </article>
+
+          <article
+            class="food-card"
+            data-image-base="bulgogi"
+            data-category="beef"
+          >
+            <div class="food-image-wrap">
+              <img alt="Bulgogi at BBQ-K" />
+              <div class="food-image-placeholder">
+                🍖<span>Add dish photo</span>
+              </div>
+              <span class="food-badge">House Marinade</span>
+              <div class="food-overlay">
+                <h4>Bulgogi</h4>
+                <p>Tender sweet soy beef with balanced savoury depth.</p>
+              </div>
+            </div>
+            <div class="food-card-label">
+              <h5>Beef</h5>
+              <p>Classic</p>
+            </div>
+          </article>
+
+          <article
+            class="food-card"
+            data-image-base="dak-galbi"
+            data-category="chicken"
+          >
+            <div class="food-image-wrap">
+              <img alt="Dak Galbi at BBQ-K" />
+              <div class="food-image-placeholder">
+                🐓<span>Add dish photo</span>
+              </div>
+              <span class="food-badge">Spicy</span>
+              <div class="food-overlay">
+                <h4>Dak Galbi</h4>
+                <p>Marinated chicken with bold heat and sweet chilli finish.</p>
+              </div>
+            </div>
+            <div class="food-card-label">
+              <h5>Chicken</h5>
+              <p>Hot Pick</p>
+            </div>
+          </article>
+
+          <article
+            class="food-card"
+            data-image-base="ojingeo-gui"
+            data-category="seafood"
+          >
+            <div class="food-image-wrap">
+              <img alt="Ojingeo Gui at BBQ-K" />
+              <div class="food-image-placeholder">
+                🦑<span>Add dish photo</span>
+              </div>
+              <span class="food-badge">Grill Special</span>
+              <div class="food-overlay">
+                <h4>Ojingeo Gui</h4>
+                <p>Char-grilled squid with smoky snap and savoury glaze.</p>
+              </div>
+            </div>
+            <div class="food-card-label">
+              <h5>Seafood</h5>
+              <p>Smoky</p>
+            </div>
+          </article>
+
+          <article
+            class="food-card"
+            data-image-base="banchan-set"
+            data-category="sides"
+          >
+            <div class="food-image-wrap">
+              <img alt="Banchan set at BBQ-K" />
+              <div class="food-image-placeholder">
+                🥗<span>Add dish photo</span>
+              </div>
+              <span class="food-badge">House Sides</span>
+              <div class="food-overlay">
+                <h4>Banchan Set</h4>
+                <p>Fresh rotating Korean side dishes made daily in-house.</p>
+              </div>
+            </div>
+            <div class="food-card-label">
+              <h5>Sides</h5>
+              <p>Daily Fresh</p>
+            </div>
+          </article>
+
+          <article
+            class="food-card"
+            data-image-base="sundubu-jjigae"
+            data-category="bowls"
+          >
+            <div class="food-image-wrap">
+              <img alt="Sundubu Jjigae at BBQ-K" />
+              <div class="food-image-placeholder">
+                🍲<span>Add dish photo</span>
+              </div>
+              <span class="food-badge">Comfort Bowl</span>
+              <div class="food-overlay">
+                <h4>Sundubu Jjigae</h4>
+                <p>Silken tofu stew with warming spice and umami broth.</p>
+              </div>
+            </div>
+            <div class="food-card-label">
+              <h5>Bowls</h5>
+              <p>Warm Favourite</p>
+            </div>
+          </article>
+
+          <article
+            class="food-card"
+            data-image-base="dolsot-bibimbap"
+            data-category="bowls"
+          >
+            <div class="food-image-wrap">
+              <img alt="Dolsot Bibimbap at BBQ-K" />
+              <div class="food-image-placeholder">
+                🍚<span>Add dish photo</span>
+              </div>
+              <span class="food-badge">Crispy Rice</span>
+              <div class="food-overlay">
+                <h4>Dolsot Bibimbap</h4>
+                <p>
+                  Stone bowl rice with crisp edges and mixed Korean toppings.
+                </p>
+              </div>
+            </div>
+            <div class="food-card-label">
+              <h5>Bowls</h5>
+              <p>Iconic Bowl</p>
+            </div>
+          </article>
+        </div>
+
+        <p class="food-empty" id="foodEmpty" hidden>
+          No dishes in this category — try another filter.
+        </p>
+
+        <div class="food-cta reveal">
+          <a class="btn-primary" href="#experience">Book a Table</a>
+          <a class="btn-outline" href="#story">Find a Location</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="choose-section" id="experience">
+  <div class="choose-heading reveal">
+    <p class="section-label">Your Experience</p>
+    <h2 class="section-title">How Do You<br><em>Want to Eat?</em></h2>
+    <p class="section-desc" style="margin:16px auto 0;text-align:center;">Pick your dining style — we'll show you the right branches and their menus.</p>
+  </div>
+  <div class="choose-grid">
+    <a class="choice-box ayce reveal" href="ayce.html">
+      <div class="choice-emoji">🔥</div>
+      <div class="choice-box-top">
+        <span class="choice-tag">3 Branches</span>
+        <h3>All You<br>Can Eat</h3>
+        <p>Unlimited rounds of meat, sides and more. Perfect for big groups and big appetites.</p>
+      </div>
+      <div class="choice-box-footer">
+        <span class="choice-branches">View AYCE Locations →</span>
+        <div class="choice-arrow">→</div>
+      </div>
+    </a>
+    <a class="choice-box ala reveal" href="ala-carte.html">
+      <div class="choice-emoji">🍽️</div>
+      <div class="choice-box-top">
+        <span class="choice-tag">2 Branches</span>
+        <h3>Order<br>by Order</h3>
+        <p>Curated cuts and set menus ordered individually — ideal for a refined, selective experience.</p>
+      </div>
+      <div class="choice-box-footer">
+        <span class="choice-branches">View À la Carte Locations →</span>
+        <div class="choice-arrow">→</div>
+      </div>
+    </a>
+  </div>
+</section> -->
+
+    <div class="bottom-strip">
+      <p>Open 7 Days</p>
+      <div class="dot"></div>
+      <p>Lunch &amp; Dinner</p>
+      <div class="dot"></div>
+      <p>Walk-ins Welcome</p>
+      <div class="dot"></div>
+      <p>Private Bookings Available</p>
+      <div class="dot"></div>
+      <p>5 Locations Across Melbourne</p>
+    </div>
+
+    <footer>
+      <div class="footer-logo">BBQ<span>-K</span></div>
+      <p>
+        &copy; 2025 BBQ-K Korean BBQ ·
+        <a
+          href="index.html"
+          style="color: rgba(255, 255, 255, 0.35); text-decoration: none"
+          >Classic</a
+        >
+        ·
+        <a
+          href="dine-split.html"
+          style="color: var(--gold); text-decoration: none"
+          >Split View</a
+        >
+        ·
+        <a
+          href="brutalist.html"
+          style="color: rgba(255, 255, 255, 0.35); text-decoration: none"
+          >Brutalist</a
+        >
+        ·
+        <a
+          href="luxury.html"
+          style="color: rgba(255, 255, 255, 0.35); text-decoration: none"
+          >Luxury</a
+        >
+      </p>
+    </footer>
+
+    <script>
+      const nav = document.getElementById("nav");
+      const scrollProgress = document.getElementById("scrollProgress");
+      const heroVideo = document.querySelector(".hero-video");
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+
+      function onScroll() {
+        const y = window.scrollY;
+        const docH = document.documentElement.scrollHeight - window.innerHeight;
+        nav.classList.toggle("scrolled", y > 60);
+        if (scrollProgress && docH > 0) {
+          scrollProgress.style.width = (y / docH) * 100 + "%";
+        }
+        if (heroVideo && !prefersReducedMotion) {
+          heroVideo.style.transform = `scale(1.08) translateY(${y * 0.1}px)`;
+        }
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("visible");
+            if (entry.target.id === "storyStats") animateCounters(entry.target);
+            revealObserver.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+      );
+
+      document
+        .querySelectorAll(
+          ".reveal, .reveal-left, .reveal-scale, .stagger-children",
+        )
+        .forEach((el) => {
+          revealObserver.observe(el);
+        });
+
+      function animateCounters(container) {
+        if (prefersReducedMotion) {
+          container.querySelectorAll("[data-count]").forEach((el) => {
+            el.textContent = el.dataset.count;
+          });
+          return;
+        }
+        container.querySelectorAll("[data-count]").forEach((el) => {
+          const target = parseInt(el.dataset.count, 10);
+          const isYear = target > 1000;
+          const duration = isYear ? 1200 : 800;
+          const start = performance.now();
+          function tick(now) {
+            const p = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased);
+            if (p < 1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        });
+      }
+
+      function initDragScroll(track, options = {}) {
+        if (!track) return;
+        const { enableWheel = false } = options;
+        let isDown = false,
+          startX,
+          scrollLeft;
+        track.addEventListener("mousedown", (e) => {
+          isDown = true;
+          startX = e.pageX - track.offsetLeft;
+          scrollLeft = track.scrollLeft;
+          track.style.cursor = "grabbing";
+        });
+        track.addEventListener("mouseleave", () => {
+          isDown = false;
+          track.style.cursor = "grab";
+        });
+        track.addEventListener("mouseup", () => {
+          isDown = false;
+          track.style.cursor = "grab";
+        });
+        track.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          track.scrollLeft =
+            scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.2;
+        });
+
+        if (enableWheel) {
+          track.addEventListener(
+            "wheel",
+            (e) => {
+              const delta =
+                Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+              if (Math.abs(delta) < 1) return;
+              e.preventDefault();
+              track.scrollLeft += delta;
+            },
+            { passive: false },
+          );
+        }
+      }
+
+      const foodTrack = document.getElementById("foodTrack");
+      initDragScroll(foodTrack, { enableWheel: true });
+
+      if (foodTrack) {
+        const foodCards = Array.from(foodTrack.querySelectorAll(".food-card"));
+        const foodPrev = document.getElementById("foodPrev");
+        const foodNext = document.getElementById("foodNext");
+        const foodEmpty = document.getElementById("foodEmpty");
+        const foodReelHint = document.getElementById("foodReelHint");
+        const foodFilterChips = Array.from(
+          document.querySelectorAll(".food-filter-chip"),
+        );
+        const cardStep = () =>
+          Math.max(260, Math.floor(foodTrack.clientWidth * 0.72));
+
+        const getVisibleFoodCards = () =>
+          foodCards.filter((card) => !card.classList.contains("is-hidden"));
+
+        const updateFoodControls = () => {
+          if (!foodPrev || !foodNext) return;
+          const visible = getVisibleFoodCards();
+          const noScroll = visible.length <= 1;
+          const max = foodTrack.scrollWidth - foodTrack.clientWidth - 2;
+          foodPrev.disabled =
+            noScroll || visible.length === 0 || foodTrack.scrollLeft <= 2;
+          foodNext.disabled =
+            noScroll || visible.length === 0 || foodTrack.scrollLeft >= max;
+          if (foodReelHint) {
+            foodReelHint.hidden = visible.length === 0;
+          }
+        };
+
+        const setActiveFoodCard = () => {
+          const visible = getVisibleFoodCards();
+          if (!visible.length) {
+            foodCards.forEach((card) => card.classList.remove("is-active"));
+            updateFoodControls();
+            return;
+          }
+          if (foodTrack.matches(":hover")) {
+            updateFoodControls();
+            return;
+          }
+          const center = foodTrack.scrollLeft + foodTrack.clientWidth / 2;
+          let closest = visible[0];
+          let minDist = Infinity;
+          visible.forEach((card) => {
+            const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+            const dist = Math.abs(center - cardCenter);
+            if (dist < minDist) {
+              minDist = dist;
+              closest = card;
+            }
+          });
+          foodCards.forEach((card) =>
+            card.classList.toggle("is-active", card === closest),
+          );
+          updateFoodControls();
+        };
+
+        const applyFoodFilter = (filter) => {
+          foodFilterChips.forEach((chip) => {
+            const isActive = chip.dataset.filter === filter;
+            chip.classList.toggle("is-active", isActive);
+            chip.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+
+          foodCards.forEach((card) => {
+            const category = card.dataset.category || "";
+            const show = filter === "all" || category === filter;
+            card.classList.toggle("is-hidden", !show);
+            card.setAttribute("aria-hidden", show ? "false" : "true");
+          });
+
+          const visible = getVisibleFoodCards();
+          if (foodEmpty) foodEmpty.hidden = visible.length > 0;
+          foodTrack.scrollLeft = 0;
+          setActiveFoodCard();
+        };
+
+        foodFilterChips.forEach((chip) => {
+          chip.addEventListener("click", () => {
+            applyFoodFilter(chip.dataset.filter || "all");
+          });
+        });
+
+        const loadDishImage = (card) => {
+          const base = card.dataset.imageBase;
+          const img = card.querySelector("img");
+          const wrap = card.querySelector(".food-image-wrap");
+          if (!base || !img || !wrap) return;
+          const candidates = [
+            `assets/${base}.jpg`,
+            `assets/${base}.jpeg`,
+            `assets/${base}.png`,
+            `assets/${base}.webp`,
+          ];
+
+          const tryCandidate = (idx) => {
+            if (idx >= candidates.length) return;
+            const probe = new Image();
+            probe.onload = () => {
+              img.src = candidates[idx];
+              wrap.classList.add("has-photo");
+            };
+            probe.onerror = () => tryCandidate(idx + 1);
+            probe.src = candidates[idx];
+          };
+
+          tryCandidate(0);
+        };
+
+        foodCards.forEach(loadDishImage);
+
+        foodCards.forEach((card) => {
+          card.addEventListener("mouseenter", () => {
+            foodCards.forEach((c) => c.classList.remove("is-active"));
+          });
+        });
+        foodTrack.addEventListener("mouseleave", setActiveFoodCard);
+
+        if (foodPrev && foodNext) {
+          foodPrev.addEventListener("click", () => {
+            foodTrack.scrollBy({ left: -cardStep(), behavior: "smooth" });
+          });
+          foodNext.addEventListener("click", () => {
+            foodTrack.scrollBy({ left: cardStep(), behavior: "smooth" });
+          });
+        }
+
+        foodTrack.addEventListener("scroll", setActiveFoodCard, {
+          passive: true,
+        });
+        foodTrack.addEventListener("keydown", (e) => {
+          if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+          e.preventDefault();
+          foodTrack.scrollBy({
+            left: e.key === "ArrowRight" ? cardStep() : -cardStep(),
+            behavior: "smooth",
+          });
+        });
+        window.addEventListener("resize", () => {
+          updateFoodControls();
+          setActiveFoodCard();
+        });
+        setActiveFoodCard();
+      }
+
+      const storyStage = document.getElementById("storyStage");
+      if (storyStage) {
+        const storyStageMedia = document.getElementById("storyStageMedia");
+        const storyStageKicker = document.getElementById("storyStageKicker");
+        const storyStageTitle = document.getElementById("storyStageTitle");
+        const storyStageText = document.getElementById("storyStageText");
+        const storyStageTag = document.getElementById("storyStageTag");
+        const storyPrev = document.getElementById("storyPrev");
+        const storyNext = document.getElementById("storyNext");
+        const yearChips = Array.from(
+          document.querySelectorAll(".story-year-chip"),
+        );
+        const progressFill = document.getElementById("storyProgressFill");
+        const progressLabel = document.getElementById("storyProgressLabel");
+        const detailTitle = document.getElementById("storyDetailTitle");
+        const detailText = document.getElementById("storyDetailText");
+        const detailMeta = document.getElementById("storyDetailMeta");
+
+        const chapters = [
+          {
+            location: "Springvale",
+            chapter: "Location 01",
+            mode: "AYCE",
+            title: "BBQ-K Springvale",
+            text: "High-energy AYCE for group nights and full-flame Korean BBQ.",
+            tag: "AYCE · Group Favourite",
+            imageBase: "springvale",
+            focus: "center 58%",
+            tint: "rgba(212,43,43,0.22)",
+          },
+          {
+            location: "Doncaster",
+            chapter: "Location 02",
+            mode: "A la Carte",
+            title: "BBQ-K Doncaster",
+            text: "Refined A la Carte branch for curated cuts and slower dining.",
+            tag: "A la Carte · Premium",
+            imageBase: "doncaster",
+            focus: "center 52%",
+            tint: "rgba(245,166,35,0.2)",
+          },
+          {
+            location: "Endeavour Hill",
+            chapter: "Location 03",
+            mode: "AYCE",
+            title: "BBQ-K Endeavour Hill",
+            text: "Neighbourhood AYCE hotspot with generous rounds and family seating.",
+            tag: "AYCE · Family Friendly",
+            imageBase: "endeavour-hill",
+            focus: "center 45%",
+            tint: "rgba(212,43,43,0.28)",
+          },
+          {
+            location: "Box Hill",
+            chapter: "Location 04",
+            mode: "A la Carte",
+            title: "BBQ-K Box Hill",
+            text: "Modern A la Carte setting for selective ordering and premium sets.",
+            tag: "A la Carte · Curated Sets",
+            imageBase: "box-hill",
+            focus: "center 35%",
+            tint: "rgba(245,166,35,0.22)",
+          },
+          {
+            location: "Brimbank",
+            chapter: "Location 05",
+            mode: "AYCE",
+            title: "BBQ-K Brimbank",
+            text: "West-side AYCE branch with full rounds and late-night BBQ comfort.",
+            tag: "AYCE · West Side",
+            imageBase: "brimbank",
+            focus: "center 42%",
+            tint: "rgba(212,43,43,0.24)",
+          },
+        ];
+
+        let activeIndex = 0;
+        let swapTimer = null;
+        let stageImageRequestId = 0;
+
+        function updateStoryControls() {
+          if (storyPrev) storyPrev.disabled = activeIndex === 0;
+          if (storyNext)
+            storyNext.disabled = activeIndex === chapters.length - 1;
+        }
+
+        function renderChapter(index) {
+          activeIndex = Math.max(0, Math.min(index, chapters.length - 1));
+          const chapter = chapters[activeIndex];
+          storyStage.classList.add("is-swapping");
+          if (swapTimer) clearTimeout(swapTimer);
+          swapTimer = setTimeout(
+            () => storyStage.classList.remove("is-swapping"),
+            480,
+          );
+
+          if (storyStageKicker)
+            storyStageKicker.textContent = `${chapter.chapter} · ${chapter.mode}`;
+          if (storyStageTitle) storyStageTitle.textContent = chapter.title;
+          if (storyStageText) storyStageText.textContent = chapter.text;
+          if (storyStageTag) storyStageTag.textContent = chapter.tag;
+          if (progressLabel) progressLabel.textContent = chapter.chapter;
+          if (progressFill)
+            progressFill.style.width = `${((activeIndex + 1) / chapters.length) * 100}%`;
+          if (detailTitle) detailTitle.textContent = chapter.title;
+          if (detailText) detailText.textContent = chapter.text;
+          if (detailMeta)
+            detailMeta.textContent = `${chapter.location} · ${chapter.chapter} · ${chapter.tag}`;
+
+          yearChips.forEach((chip, idx) =>
+            chip.classList.toggle("is-active", idx === activeIndex),
+          );
+          if (storyStageMedia) {
+            stageImageRequestId += 1;
+            const requestId = stageImageRequestId;
+            const imageCandidates = [
+              `assets/${chapter.imageBase}.jpg`,
+              `assets/${chapter.imageBase}.jpeg`,
+              `assets/${chapter.imageBase}.png`,
+              `assets/${chapter.imageBase}.webp`,
+            ];
+
+            const applyStageBackground = (imagePath) => {
+              if (requestId !== stageImageRequestId) return;
+              storyStageMedia.style.background =
+                `radial-gradient(ellipse 82% 62% at 20% 80%, ${chapter.tint} 0%, transparent 70%),` +
+                `linear-gradient(135deg, rgba(26,26,26,0.64), rgba(26,26,26,0.26)),` +
+                `url("${imagePath}") ${chapter.focus} / cover no-repeat`;
+            };
+
+            const tryCandidate = (idx) => {
+              if (idx >= imageCandidates.length) {
+                applyStageBackground("assets/hero-poster.jpg");
+                return;
+              }
+              const probe = new Image();
+              probe.onload = () => applyStageBackground(imageCandidates[idx]);
+              probe.onerror = () => tryCandidate(idx + 1);
+              probe.src = imageCandidates[idx];
+            };
+
+            tryCandidate(0);
+          }
+          updateStoryControls();
+        }
+
+        yearChips.forEach((chip, idx) => {
+          chip.addEventListener("click", () => renderChapter(idx));
+        });
+
+        if (storyPrev)
+          storyPrev.addEventListener("click", () =>
+            renderChapter(activeIndex - 1),
+          );
+        if (storyNext)
+          storyNext.addEventListener("click", () =>
+            renderChapter(activeIndex + 1),
+          );
+
+        storyStage.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowLeft") renderChapter(activeIndex - 1);
+          if (e.key === "ArrowRight") renderChapter(activeIndex + 1);
+        });
+
+        function gotoBranch(index) {
+          renderChapter(index);
+          document
+            .getElementById("story")
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        document.querySelectorAll("[data-split-target]").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            const target = parseInt(link.dataset.splitTarget, 10);
+            if (!Number.isNaN(target)) {
+              e.preventDefault();
+              gotoBranch(target);
+            }
+          });
+        });
+
+        function loadSplitPanelBackground(
+          panel,
+          mediaEl,
+          imageBase,
+          fallbackBase,
+          tint,
+          focus,
+        ) {
+          if (!panel || !mediaEl) return;
+          const bases = [imageBase, fallbackBase].filter(Boolean);
+          const candidates = bases.flatMap((base) => [
+            `assets/${base}.jpg`,
+            `assets/${base}.jpeg`,
+            `assets/${base}.png`,
+            `assets/${base}.webp`,
+          ]);
+
+          const apply = (path) => {
+            mediaEl.style.background =
+              `linear-gradient(to top, rgba(16,16,16,0.5), rgba(16,16,16,0.15)),` +
+              `radial-gradient(ellipse 80% 60% at 30% 80%, ${tint} 0%, transparent 70%),` +
+              `url("${path}") ${focus} / cover no-repeat`;
+            panel.classList.add("has-photo");
+          };
+
+          const tryNext = (idx) => {
+            if (idx >= candidates.length) {
+              apply("assets/hero-poster.jpg");
+              return;
+            }
+            const probe = new Image();
+            probe.onload = () => apply(candidates[idx]);
+            probe.onerror = () => tryNext(idx + 1);
+            probe.src = candidates[idx];
+          };
+
+          tryNext(0);
+        }
+
+        function loadSplitThumb(link) {
+          const base = link.dataset.imageBase;
+          const img = link.querySelector("img");
+          const thumb = link.querySelector(".split-branch-thumb");
+          const name =
+            link.querySelector(".split-branch-name")?.textContent || "Branch";
+          if (!base || !img || !thumb) return;
+
+          img.alt = `BBQ-K ${name}`;
+          const candidates = [
+            `assets/${base}.jpg`,
+            `assets/${base}.jpeg`,
+            `assets/${base}.png`,
+            `assets/${base}.webp`,
+          ];
+
+          const tryNext = (idx) => {
+            if (idx >= candidates.length) return;
+            const probe = new Image();
+            probe.onload = () => {
+              img.src = candidates[idx];
+              thumb.classList.add("has-photo");
+            };
+            probe.onerror = () => tryNext(idx + 1);
+            probe.src = candidates[idx];
+          };
+
+          tryNext(0);
+        }
+
+        loadSplitPanelBackground(
+          document.getElementById("splitAyce"),
+          document.getElementById("splitAyceMedia"),
+          "springvale",
+          "samgyeopsal",
+          "rgba(212,43,43,0.28)",
+          "center 55%",
+        );
+
+        loadSplitPanelBackground(
+          document.getElementById("splitAla"),
+          document.getElementById("splitAlaMedia"),
+          "doncaster",
+          "galbi",
+          "rgba(245,166,35,0.22)",
+          "center 50%",
+        );
+
+        document
+          .querySelectorAll(".split-branch[data-image-base]")
+          .forEach(loadSplitThumb);
+
+        const branchParam = new URLSearchParams(window.location.search).get(
+          "branch",
+        );
+        const initialIndex =
+          branchParam !== null ? parseInt(branchParam, 10) : 0;
+        renderChapter(Number.isNaN(initialIndex) ? 0 : initialIndex);
+        if (branchParam !== null) {
+          requestAnimationFrame(() => {
+            document
+              .getElementById("story")
+              ?.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

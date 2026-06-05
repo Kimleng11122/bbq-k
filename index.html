@@ -2265,7 +2265,7 @@
 
 <footer>
   <div class="footer-logo">BBQ<span>-K</span></div>
-  <p>&copy; 2025 BBQ-K Korean BBQ · <a href="index.html" style="color:var(--gold);text-decoration:none;">Classic</a> · <a href="brutalist.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">Brutalist</a> · <a href="luxury.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">Luxury</a></p>
+  <p>&copy; 2025 BBQ-K Korean BBQ · <a href="index.html" style="color:var(--gold);text-decoration:none;">Classic</a> · <a href="dine-split.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">Split View</a> · <a href="brutalist.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">Brutalist</a> · <a href="luxury.html" style="color:rgba(255,255,255,0.35);text-decoration:none;">Luxury</a></p>
 </footer>
 
 <script>
@@ -2672,7 +2672,14 @@
       });
     });
 
-    renderChapter(0);
+    const branchParam = new URLSearchParams(window.location.search).get('branch');
+    const initialIndex = branchParam !== null ? parseInt(branchParam, 10) : 0;
+    renderChapter(Number.isNaN(initialIndex) ? 0 : initialIndex);
+    if (branchParam !== null) {
+      requestAnimationFrame(() => {
+        document.getElementById('story')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
   }
 
 </script>
