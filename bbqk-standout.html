@@ -162,6 +162,7 @@
 
     .btn:focus-visible,
     .nav-links a:focus-visible,
+    .eat-option .btn:focus-visible,
     .meat-card:focus-visible,
     .chip-button:focus-visible,
     .map-marker:focus-visible,
@@ -353,6 +354,249 @@
       font-family: "Ultra", serif;
       color: var(--bbq-meat);
       line-height: 1.2;
+    }
+
+    .eat-section {
+      background:
+        radial-gradient(circle at 7% 8%, rgba(242, 108, 47, 0.24), transparent 29%),
+        linear-gradient(165deg, #180c0f 0%, #2a0f13 52%, #120d10 100%);
+      color: #fff;
+      border-top: 1px solid rgba(242, 108, 47, 0.35);
+      border-bottom: 1px solid rgba(242, 108, 47, 0.25);
+      padding-bottom: 0;
+    }
+
+    .eat-shell {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .eat-shell .kicker {
+      color: var(--bbq-red);
+    }
+
+    .eat-shell .display-heading {
+      font-size: clamp(2rem, 5.6vw, 4.4rem);
+      color: #fff;
+      max-width: 13ch;
+    }
+
+    .eat-shell .display-heading .accent {
+      color: var(--bbq-red);
+      white-space: nowrap;
+    }
+
+    .eat-shell p {
+      margin: 0;
+      max-width: 58ch;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: clamp(0.96rem, 1.2vw, 1.1rem);
+    }
+
+    .eat-cinematic {
+      position: relative;
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: clip;
+      background: transparent;
+    }
+
+    .eat-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .eat-divider {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(10, 10, 10, 0.9);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-family: "Ultra", serif;
+      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+      z-index: 4;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+    }
+
+    .eat-option {
+      position: relative;
+      overflow: clip;
+      isolation: isolate;
+      min-height: clamp(400px, 56vw, 620px);
+      border-radius: 0;
+      border: 0;
+      box-shadow: none;
+      display: flex;
+      align-items: end;
+    }
+
+    .eat-option + .eat-option {
+      border-left: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .eat-option img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.32s ease;
+    }
+
+    .eat-option:hover img,
+    .eat-option:focus-within img {
+      transform: scale(1.04);
+    }
+
+    .eat-option::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to top, rgba(8, 8, 8, 0.92), rgba(8, 8, 8, 0.2));
+    }
+
+    .eat-option::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .eat-option.ayce::after {
+      background: linear-gradient(112deg, rgba(200, 16, 46, 0.3), transparent 44%);
+    }
+
+    .eat-option.ala::after {
+      background: linear-gradient(248deg, rgba(242, 108, 47, 0.26), transparent 46%);
+    }
+
+    .eat-body {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      display: grid;
+      gap: 0.56rem;
+      padding: 1.25rem clamp(1rem, 2vw, 1.8rem) 1.2rem;
+      color: #fff;
+    }
+
+    .eat-order {
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.67rem;
+      color: rgba(255, 255, 255, 0.83);
+      font-weight: 700;
+    }
+
+    .eat-title {
+      margin: 0;
+      font-family: "Black Han Sans", Impact, sans-serif;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      font-size: clamp(1.75rem, 3vw, 3rem);
+      line-height: 0.95;
+    }
+
+    .eat-sub {
+      margin: 0;
+      max-width: 30ch;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.94);
+      font-weight: 600;
+    }
+
+    .eat-note {
+      margin: 0;
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.78);
+      font-weight: 700;
+    }
+
+    .eat-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.2rem;
+    }
+
+    .eat-cta,
+    .eat-ghost {
+      border-width: 1px;
+      font-size: 0.67rem;
+      padding: 0.56rem 0.82rem;
+      letter-spacing: 0.08em;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .eat-cta {
+      background: var(--bbq-red);
+      border-color: rgba(255, 255, 255, 0.24);
+      color: #fff;
+    }
+
+    .eat-cta:hover {
+      background: #df1b3d;
+      transform: none;
+    }
+
+    .eat-ghost {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.4);
+      color: #fff;
+    }
+
+    .eat-ghost:hover {
+      background: rgba(255, 255, 255, 0.22);
+      transform: none;
+    }
+
+    .eat-locations {
+      margin: 0.08rem 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+    }
+
+    .eat-locations li {
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 0.64rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 0.24rem 0.52rem;
+      color: #fff;
+    }
+
+    .eat-option.ala .eat-body {
+      text-align: right;
+      justify-items: end;
+    }
+
+    .eat-option.ala .eat-actions,
+    .eat-option.ala .eat-locations {
+      justify-content: flex-end;
     }
 
     .meats-section {
@@ -811,6 +1055,29 @@
         grid-template-columns: 1fr;
       }
 
+      .eat-panels {
+        grid-template-columns: 1fr;
+      }
+
+      .eat-option + .eat-option {
+        border-left: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+      }
+
+      .eat-divider {
+        display: none;
+      }
+
+      .eat-option.ala .eat-body {
+        text-align: left;
+        justify-items: start;
+      }
+
+      .eat-option.ala .eat-actions,
+      .eat-option.ala .eat-locations {
+        justify-content: flex-start;
+      }
+
       .meat-card:nth-child(1),
       .meat-card:nth-child(2),
       .meat-card:nth-child(3),
@@ -843,6 +1110,14 @@
 
       .hero-badge-row {
         gap: 0.48rem;
+      }
+
+      .eat-cinematic {
+        margin-top: 1.2rem;
+      }
+
+      .eat-option {
+        min-height: 370px;
       }
 
       .gallery-track {
@@ -887,6 +1162,7 @@
       </a>
       <nav class="nav-links" aria-label="Primary">
         <a href="#story">Story</a>
+        <a href="#how-you-can-eat">How You Can Eat</a>
         <a href="#meats">Signature Meats</a>
         <a href="#experience">Experience</a>
         <a href="#locations">Locations</a>
@@ -958,46 +1234,58 @@
       </div>
     </section>
 
-    <section class="meats-section section-shell" id="meats" aria-labelledby="meats-title">
-      <div class="container">
+    <section class="eat-section section-shell" id="how-you-can-eat" aria-labelledby="how-you-can-eat-title">
+      <div class="container eat-shell">
         <div class="section-head">
           <div>
-            <span class="kicker">Signature Meats</span>
-            <h2 class="display-heading" id="meats-title">The Hero Cuts At BBQ-K</h2>
+            <span class="kicker">How Dining Works</span>
+            <h2 class="display-heading" id="how-you-can-eat-title">
+              How Do You<span class="accent"> Want To Eat?</span>
+            </h2>
           </div>
-          <p>Four centerpiece cuts designed to lead the table and anchor the entire menu story.</p>
         </div>
+      </div>
 
-        <div class="meat-grid">
-          <a class="meat-card" href="#locations" aria-label="Wagyu Beef card">
-            <img src="assets/bulgogi.jpg" alt="Premium beef slices sizzling on the grill">
-            <div class="meat-content">
-              <h3>Wagyu Beef</h3>
-              <p>Marble-rich beef with deep smoke aroma and fast sear finish.</p>
+      <div class="eat-cinematic">
+        <div class="eat-panels">
+          <article class="eat-option ayce" aria-labelledby="eat-ayce-title">
+            <img src="assets/springvale.jpg" alt="BBQ-K all you can eat table setup">
+            <div class="eat-body">
+              <p class="eat-order">1 SERVICE MODE · AYCE</p>
+              <h3 class="eat-title" id="eat-ayce-title">All You Can Eat</h3>
+              <p class="eat-sub">One price. Unlimited rounds.</p>
+              <p class="eat-note">Pay once per person · Keep ordering until full</p>
+              <div class="eat-actions">
+                <a class="btn eat-cta" href="#locations">Choose AYCE</a>
+                <a class="btn eat-ghost" href="#locations">AYCE Branches</a>
+              </div>
+              <ul class="eat-locations">
+                <li>Springvale</li>
+                <li>Endeavour Hill</li>
+                <li>Brimbank</li>
+              </ul>
             </div>
-          </a>
-          <a class="meat-card" href="#locations" aria-label="Marinated Beef Rib card">
-            <img src="assets/galbi.jpg" alt="Marinated beef ribs on Korean BBQ grill">
-            <div class="meat-content">
-              <h3>Marinated Beef Rib</h3>
-              <p>Signature sweet-savory galbi glaze caramelized over live heat.</p>
+          </article>
+
+          <article class="eat-option ala" aria-labelledby="eat-ala-title">
+            <img src="assets/doncaster.jpg" alt="A La Carte Korean BBQ dining at BBQ-K">
+            <div class="eat-body">
+              <p class="eat-order">2 SERVICE MODE · A LA CARTE</p>
+              <h3 class="eat-title" id="eat-ala-title">A La Carte</h3>
+              <p class="eat-sub">Order dish by dish, at your own pace.</p>
+              <p class="eat-note">Pay only for what you select · Build your own sequence</p>
+              <div class="eat-actions">
+                <a class="btn eat-cta" href="#locations">Choose A La Carte</a>
+                <a class="btn eat-ghost" href="#locations">A La Carte Branches</a>
+              </div>
+              <ul class="eat-locations">
+                <li>Doncaster</li>
+                <li>Box Hill</li>
+              </ul>
             </div>
-          </a>
-          <a class="meat-card" href="#locations" aria-label="Pork Belly card">
-            <img src="assets/samgyeopsal.jpg" alt="Crisp pork belly slices cooking at table">
-            <div class="meat-content">
-              <h3>Pork Belly</h3>
-              <p>Classic samgyeopsal textures with crackle edges and juicy center.</p>
-            </div>
-          </a>
-          <a class="meat-card" href="#locations" aria-label="Seafood Selection card">
-            <img src="assets/ojingeo-gui.jpg" alt="Korean grilled seafood platter">
-            <div class="meat-content">
-              <h3>Seafood Selection</h3>
-              <p>Flame-charred ocean cuts balancing smoke, spice, and clean finish.</p>
-            </div>
-          </a>
+          </article>
         </div>
+        <div class="eat-divider" aria-hidden="true"><span>OR</span></div>
       </div>
     </section>
 
@@ -1047,6 +1335,49 @@
               <p>The atmosphere stays high-energy from first bite to final round.</p>
             </div>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="meats-section section-shell" id="meats" aria-labelledby="meats-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Signature Meats</span>
+            <h2 class="display-heading" id="meats-title">The Hero Cuts At BBQ-K</h2>
+          </div>
+          <p>Four centerpiece cuts designed to lead the table and anchor the entire menu story.</p>
+        </div>
+
+        <div class="meat-grid">
+          <a class="meat-card" href="#locations" aria-label="Wagyu Beef card">
+            <img src="assets/bulgogi.jpg" alt="Premium beef slices sizzling on the grill">
+            <div class="meat-content">
+              <h3>Wagyu Beef</h3>
+              <p>Marble-rich beef with deep smoke aroma and fast sear finish.</p>
+            </div>
+          </a>
+          <a class="meat-card" href="#locations" aria-label="Marinated Beef Rib card">
+            <img src="assets/galbi.jpg" alt="Marinated beef ribs on Korean BBQ grill">
+            <div class="meat-content">
+              <h3>Marinated Beef Rib</h3>
+              <p>Signature sweet-savory galbi glaze caramelized over live heat.</p>
+            </div>
+          </a>
+          <a class="meat-card" href="#locations" aria-label="Pork Belly card">
+            <img src="assets/samgyeopsal.jpg" alt="Crisp pork belly slices cooking at table">
+            <div class="meat-content">
+              <h3>Pork Belly</h3>
+              <p>Classic samgyeopsal textures with crackle edges and juicy center.</p>
+            </div>
+          </a>
+          <a class="meat-card" href="#locations" aria-label="Seafood Selection card">
+            <img src="assets/ojingeo-gui.jpg" alt="Korean grilled seafood platter">
+            <div class="meat-content">
+              <h3>Seafood Selection</h3>
+              <p>Flame-charred ocean cuts balancing smoke, spice, and clean finish.</p>
+            </div>
+          </a>
         </div>
       </div>
     </section>
