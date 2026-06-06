@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BBQ-K | Standout Homepage</title>
+  <meta
+    name="description"
+    content="All you can eat Korean BBQ done differently. Explore signature meats, immersive dining, and all BBQ-K locations."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Black+Han+Sans&family=Ultra&display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    :root {
+      --bbq-red: #c8102e;
+      --bbq-red-deep: #980c22;
+      --bbq-cream: #f7f0e6;
+      --bbq-black: #101010;
+      --bbq-orange: #f26c2f;
+      --bbq-meat: #7f1424;
+      --bbq-ink: #1d1d1d;
+      --surface: #fffaf2;
+      --radius-lg: 1.25rem;
+      --radius-xl: 1.8rem;
+      --shadow-soft: 0 24px 45px rgba(16, 16, 16, 0.16);
+      --shadow-card: 0 18px 30px rgba(16, 16, 16, 0.18);
+      --max-width: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Barlow", Arial, sans-serif;
+      color: var(--bbq-ink);
+      background: var(--bbq-cream);
+      line-height: 1.45;
+    }
+
+    img,
+    video {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .section-shell {
+      padding: clamp(4.5rem, 7vw, 7rem) 0;
+    }
+
+    .kicker {
+      display: inline-block;
+      margin-bottom: 1rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-family: "Ultra", serif;
+      font-size: 0.72rem;
+      color: var(--bbq-red);
+    }
+
+    .display-heading {
+      margin: 0;
+      font-family: "Black Han Sans", Impact, sans-serif;
+      letter-spacing: 0.01em;
+      line-height: 0.96;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(247, 240, 230, 0.2);
+      backdrop-filter: blur(16px);
+      background: rgba(12, 10, 10, 0.64);
+    }
+
+    .nav-inner {
+      width: min(var(--max-width), calc(100% - 2rem));
+      margin: 0 auto;
+      min-height: 4.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: #fff;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .brand-dot {
+      width: 0.82rem;
+      height: 0.82rem;
+      border-radius: 999px;
+      background: var(--bbq-red);
+      box-shadow: 0 0 0 4px rgba(200, 16, 46, 0.2);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.2rem;
+      font-weight: 600;
+      font-size: 0.93rem;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .nav-links a {
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      border: 2px solid transparent;
+      padding: 0.78rem 1.3rem;
+      cursor: pointer;
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition:
+        background-color 0.22s ease,
+        color 0.22s ease,
+        border-color 0.22s ease,
+        box-shadow 0.22s ease,
+        transform 0.22s ease;
+    }
+
+    .btn:focus-visible,
+    .nav-links a:focus-visible,
+    .meat-card:focus-visible,
+    .chip-button:focus-visible,
+    .map-marker:focus-visible,
+    .social-card:focus-visible {
+      outline: 3px solid var(--bbq-orange);
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: var(--bbq-red);
+      box-shadow: 0 12px 25px rgba(200, 16, 46, 0.28);
+    }
+
+    .btn-primary:hover {
+      background: #d5193a;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 26px rgba(200, 16, 46, 0.35);
+    }
+
+    .btn-ghost {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.82);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      color: #fff;
+      background: #0c0c0c;
+      display: flex;
+      align-items: end;
+      overflow: clip;
+    }
+
+    .hero video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(105deg, rgba(10, 7, 7, 0.84) 17%, rgba(10, 7, 7, 0.38) 63%),
+        radial-gradient(circle at 20% 0%, rgba(200, 16, 46, 0.28), transparent 38%),
+        linear-gradient(to top, rgba(10, 7, 7, 0.84), rgba(10, 7, 7, 0.14));
+    }
+
+    .napkin-float {
+      position: absolute;
+      top: 22%;
+      right: clamp(2.2rem, 9vw, 8rem);
+      width: clamp(90px, 15vw, 185px);
+      aspect-ratio: 1 / 1;
+      background: linear-gradient(140deg, #de1236, #a60d27);
+      border-radius: 20% 57% 24% 46%;
+      transform: rotate(16deg);
+      box-shadow: 0 28px 34px rgba(200, 16, 46, 0.45);
+      z-index: 2;
+      animation: napkinFloat 6s ease-in-out infinite;
+    }
+
+    .napkin-float::after {
+      content: "";
+      position: absolute;
+      inset: 16% 14%;
+      border-radius: 18% 44% 24% 40%;
+      border: 2px solid rgba(255, 255, 255, 0.38);
+      transform: rotate(-14deg);
+    }
+
+    @keyframes napkinFloat {
+      0%,
+      100% {
+        transform: rotate(16deg) translateY(0);
+      }
+      50% {
+        transform: rotate(13deg) translateY(-14px);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      padding: 8.6rem 0 5rem;
+      width: min(var(--max-width), calc(100% - 2rem));
+      margin: 0 auto;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.65rem, 7.8vw, 6.4rem);
+      max-width: 12ch;
+      text-wrap: balance;
+    }
+
+    .hero-title span {
+      display: block;
+    }
+
+    .hero-copy {
+      max-width: 49ch;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .hero-badge {
+      border-radius: 999px;
+      border: 1px solid rgba(247, 240, 230, 0.5);
+      background: rgba(247, 240, 230, 0.18);
+      padding: 0.34rem 0.66rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.69rem;
+      font-weight: 600;
+    }
+
+    .story-section {
+      background:
+        linear-gradient(170deg, rgba(247, 240, 230, 0.9), rgba(247, 240, 230, 1)),
+        repeating-linear-gradient(
+          -22deg,
+          rgba(200, 16, 46, 0.04) 0 18px,
+          rgba(200, 16, 46, 0.01) 18px 42px
+        );
+      border-top: 1px solid rgba(16, 16, 16, 0.08);
+    }
+
+    .story-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: clamp(1.2rem, 3vw, 2.5rem);
+      align-items: start;
+    }
+
+    .story-heading {
+      font-size: clamp(2rem, 6vw, 5.1rem);
+      color: var(--bbq-black);
+      max-width: 9.5ch;
+    }
+
+    .story-heading strong {
+      color: var(--bbq-red);
+      display: inline-block;
+    }
+
+    .story-narrative {
+      display: grid;
+      gap: 1.1rem;
+      padding-top: 0.6rem;
+    }
+
+    .story-narrative p {
+      margin: 0;
+      font-size: clamp(1.02rem, 1.3vw, 1.15rem);
+      color: #292929;
+    }
+
+    .story-pull {
+      margin-top: 0.6rem;
+      border-left: 4px solid var(--bbq-red);
+      padding-left: 1rem;
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      font-family: "Ultra", serif;
+      color: var(--bbq-meat);
+      line-height: 1.2;
+    }
+
+    .meats-section {
+      color: #fff;
+      background:
+        radial-gradient(circle at 7% 8%, rgba(242, 108, 47, 0.24), transparent 29%),
+        linear-gradient(165deg, #180c0f 0%, #2a0f13 52%, #120d10 100%);
+    }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .section-head .display-heading {
+      font-size: clamp(2rem, 5.2vw, 4.3rem);
+      max-width: 10ch;
+    }
+
+    .section-head p {
+      margin: 0;
+      max-width: 35ch;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .meat-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .meat-card {
+      position: relative;
+      min-height: 320px;
+      border-radius: var(--radius-xl);
+      overflow: clip;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      box-shadow: var(--shadow-card);
+      cursor: pointer;
+      isolation: isolate;
+      display: flex;
+      align-items: end;
+      transition:
+        box-shadow 0.24s ease,
+        border-color 0.24s ease;
+    }
+
+    .meat-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to top, rgba(6, 6, 6, 0.9), rgba(6, 6, 6, 0.28));
+    }
+
+    .meat-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.34s ease;
+    }
+
+    .meat-card:hover img,
+    .meat-card:focus-visible img {
+      transform: scale(1.05);
+    }
+
+    .meat-card:hover,
+    .meat-card:focus-visible {
+      border-color: rgba(242, 108, 47, 0.82);
+      box-shadow: 0 20px 34px rgba(242, 108, 47, 0.24);
+    }
+
+    .meat-card:nth-child(1),
+    .meat-card:nth-child(4) {
+      grid-column: span 7;
+    }
+
+    .meat-card:nth-child(2),
+    .meat-card:nth-child(3) {
+      grid-column: span 5;
+    }
+
+    .meat-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 1rem 1.1rem 1.2rem;
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .meat-content h3 {
+      margin: 0;
+      font-family: "Black Han Sans", Impact, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+    }
+
+    .meat-content p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 30ch;
+    }
+
+    .experience-section {
+      background: var(--surface);
+      border-top: 1px solid rgba(16, 16, 16, 0.08);
+      border-bottom: 1px solid rgba(16, 16, 16, 0.08);
+    }
+
+    .gallery-shell {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    .gallery-track {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(250px, 34vw);
+      gap: 0.9rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+    }
+
+    .gallery-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      min-height: 380px;
+      overflow: clip;
+      scroll-snap-align: start;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(16, 16, 16, 0.1);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.08));
+    }
+
+    .gallery-caption {
+      position: absolute;
+      inset: auto 0 0;
+      z-index: 1;
+      padding: 1rem;
+      color: #fff;
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .gallery-caption h3 {
+      margin: 0;
+      font-family: "Black Han Sans", Impact, sans-serif;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      font-size: 1.3rem;
+    }
+
+    .gallery-caption p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .locations-section {
+      background: #fff8ee;
+    }
+
+    .locations-layout {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .chip-list {
+      display: grid;
+      gap: 0.62rem;
+    }
+
+    .chip-button {
+      border: 1px solid rgba(16, 16, 16, 0.18);
+      border-radius: 0.8rem;
+      background: #fff;
+      color: var(--bbq-black);
+      padding: 0.82rem 0.92rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .chip-button.active {
+      border-color: var(--bbq-red);
+      background: #fff0f3;
+      box-shadow: 0 10px 24px rgba(200, 16, 46, 0.15);
+    }
+
+    .chip-button .mode {
+      border-radius: 999px;
+      padding: 0.2rem 0.56rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--bbq-ink);
+    }
+
+    .chip-button .mode.ayce {
+      background: var(--bbq-red);
+    }
+
+    .map-stage {
+      position: relative;
+      border-radius: var(--radius-xl);
+      min-height: 460px;
+      background:
+        radial-gradient(circle at 17% 34%, rgba(200, 16, 46, 0.25), transparent 30%),
+        radial-gradient(circle at 77% 62%, rgba(242, 108, 47, 0.2), transparent 28%),
+        linear-gradient(145deg, #fff6eb, #fff);
+      border: 1px solid rgba(16, 16, 16, 0.12);
+      overflow: clip;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .map-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(16, 16, 16, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 16, 16, 0.08) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.9));
+      pointer-events: none;
+    }
+
+    .map-lines {
+      position: absolute;
+      inset: 0;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .map-lines path {
+      fill: none;
+      stroke: rgba(16, 16, 16, 0.42);
+      stroke-width: 2;
+      stroke-dasharray: 8 6;
+    }
+
+    .map-markers {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+    }
+
+    .map-marker {
+      position: absolute;
+      border: 0;
+      width: 2.35rem;
+      height: 2.35rem;
+      border-radius: 999px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.76rem;
+      background: var(--bbq-red);
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 10px 16px rgba(152, 12, 34, 0.3);
+      transition: transform 0.22s ease, background-color 0.22s ease;
+    }
+
+    .map-marker.active {
+      background: var(--bbq-orange);
+      transform: translate(-50%, -50%) scale(1.08);
+    }
+
+    .map-detail {
+      position: absolute;
+      inset: auto 1rem 1rem;
+      z-index: 3;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.93);
+      border: 1px solid rgba(16, 16, 16, 0.14);
+      padding: 0.9rem;
+      display: grid;
+      gap: 0.3rem;
+      max-width: 360px;
+      backdrop-filter: blur(10px);
+    }
+
+    .map-detail h3 {
+      margin: 0;
+      font-family: "Black Han Sans", Impact, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      font-size: 1.35rem;
+      color: var(--bbq-black);
+    }
+
+    .map-detail p {
+      margin: 0;
+      color: #333;
+    }
+
+    .map-detail .meta {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--bbq-red);
+    }
+
+    .social-section {
+      background:
+        radial-gradient(circle at 90% 8%, rgba(200, 16, 46, 0.16), transparent 34%),
+        linear-gradient(to bottom, #fffefb, #f8ede0);
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .social-card {
+      position: relative;
+      border: 1px solid rgba(16, 16, 16, 0.12);
+      border-radius: var(--radius-lg);
+      overflow: clip;
+      min-height: 270px;
+      box-shadow: 0 16px 30px rgba(16, 16, 16, 0.12);
+      background: #fff;
+      cursor: pointer;
+      transition:
+        box-shadow 0.24s ease,
+        transform 0.24s ease,
+        border-color 0.24s ease;
+    }
+
+    .social-card:hover,
+    .social-card:focus-visible {
+      transform: translateY(-3px);
+      border-color: rgba(200, 16, 46, 0.45);
+      box-shadow: 0 20px 30px rgba(200, 16, 46, 0.2);
+    }
+
+    .social-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .social-card.large {
+      grid-column: span 6;
+      min-height: 330px;
+    }
+
+    .social-card.small {
+      grid-column: span 3;
+      min-height: 220px;
+    }
+
+    .social-overlay {
+      position: absolute;
+      inset: auto 0 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.06));
+      color: #fff;
+      padding: 0.85rem;
+      display: grid;
+      gap: 0.3rem;
+    }
+
+    .social-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.7rem;
+      align-items: center;
+    }
+
+    .social-pill {
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      padding: 0.2rem 0.55rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.66rem;
+      font-weight: 700;
+    }
+
+    .social-metric {
+      font-size: 0.74rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .social-caption {
+      margin: 0;
+      font-size: 0.93rem;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .footer-cta {
+      background: var(--bbq-black);
+      color: #fff;
+      text-align: center;
+      padding: 2.3rem 1rem;
+      border-top: 2px solid rgba(242, 108, 47, 0.7);
+    }
+
+    .footer-cta p {
+      margin: 0;
+      font-family: "Ultra", serif;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: clamp(0.9rem, 2vw, 1.16rem);
+    }
+
+    @media (max-width: 1100px) {
+      .gallery-track {
+        grid-auto-columns: minmax(240px, 48vw);
+      }
+    }
+
+    @media (max-width: 960px) {
+      .nav-inner {
+        min-height: 4rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .story-layout,
+      .locations-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .meat-card:nth-child(1),
+      .meat-card:nth-child(2),
+      .meat-card:nth-child(3),
+      .meat-card:nth-child(4) {
+        grid-column: span 12;
+      }
+
+      .social-card.large,
+      .social-card.small {
+        grid-column: span 6;
+      }
+
+      .map-stage {
+        min-height: 410px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .container {
+        width: min(var(--max-width), calc(100% - 1.2rem));
+      }
+
+      .hero-content {
+        padding: 7.8rem 0 4rem;
+      }
+
+      .hero-actions .btn {
+        width: 100%;
+      }
+
+      .hero-badge-row {
+        gap: 0.48rem;
+      }
+
+      .gallery-track {
+        grid-auto-columns: minmax(220px, 82vw);
+      }
+
+      .social-card.large,
+      .social-card.small {
+        grid-column: span 12;
+      }
+
+      .map-detail {
+        max-width: none;
+      }
+
+      .chip-button {
+        padding: 0.78rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" id="top">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="Go to top">
+        <span class="brand-dot" aria-hidden="true"></span>
+        <span>BBQ-K</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#story">Story</a>
+        <a href="#meats">Signature Meats</a>
+        <a href="#experience">Experience</a>
+        <a href="#locations">Locations</a>
+        <a href="#social">Social Feed</a>
+      </nav>
+      <a class="btn btn-primary" href="#locations">Book Now</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Hero">
+      <video
+        src="assets/hero-cinematic.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+      ></video>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="napkin-float" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <span class="kicker">Cinematic Korean BBQ</span>
+        <h1 class="display-heading hero-title">
+          <span>ALL YOU CAN EAT.</span>
+          <span>KOREAN BBQ.</span>
+          <span>DONE DIFFERENTLY.</span>
+        </h1>
+        <p class="hero-copy">
+          Big flames. Bold plates. Shared moments that feel modern, editorial, and impossible not to photograph.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#locations">Book Now</a>
+          <a class="btn btn-ghost" href="#meats">View Menu</a>
+        </div>
+        <div class="hero-badge-row" aria-label="BBQ-K highlights">
+          <span class="hero-badge">5 Melbourne Branches</span>
+          <span class="hero-badge">AYCE + A La Carte</span>
+          <span class="hero-badge">Red Napkin Signature</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="story-section section-shell" id="story" aria-labelledby="story-title">
+      <div class="container">
+        <span class="kicker">The BBQ-K Story</span>
+        <div class="story-layout">
+          <h2 class="display-heading story-heading" id="story-title">
+            IT STARTED WITH A <strong>RED NAPKIN.</strong>
+          </h2>
+          <div class="story-narrative">
+            <p>
+              One folded napkin on one table became a symbol: gather close, grill loud, and make the meal unforgettable.
+            </p>
+            <p>
+              From first spark to full table, BBQ-K built every touchpoint around memory. You taste it in the smoke, see it in the colors,
+              and feel it in the way every branch stays warm, fast, and alive.
+            </p>
+            <p>
+              This is not nostalgia for old-school BBQ bars. It is a new editorial Korean BBQ identity built for today.
+            </p>
+            <p class="story-pull">
+              Red napkin in hand. Fire on the grill. The story keeps getting bigger.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="meats-section section-shell" id="meats" aria-labelledby="meats-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Signature Meats</span>
+            <h2 class="display-heading" id="meats-title">The Hero Cuts At BBQ-K</h2>
+          </div>
+          <p>Four centerpiece cuts designed to lead the table and anchor the entire menu story.</p>
+        </div>
+
+        <div class="meat-grid">
+          <a class="meat-card" href="#locations" aria-label="Wagyu Beef card">
+            <img src="assets/bulgogi.jpg" alt="Premium beef slices sizzling on the grill">
+            <div class="meat-content">
+              <h3>Wagyu Beef</h3>
+              <p>Marble-rich beef with deep smoke aroma and fast sear finish.</p>
+            </div>
+          </a>
+          <a class="meat-card" href="#locations" aria-label="Marinated Beef Rib card">
+            <img src="assets/galbi.jpg" alt="Marinated beef ribs on Korean BBQ grill">
+            <div class="meat-content">
+              <h3>Marinated Beef Rib</h3>
+              <p>Signature sweet-savory galbi glaze caramelized over live heat.</p>
+            </div>
+          </a>
+          <a class="meat-card" href="#locations" aria-label="Pork Belly card">
+            <img src="assets/samgyeopsal.jpg" alt="Crisp pork belly slices cooking at table">
+            <div class="meat-content">
+              <h3>Pork Belly</h3>
+              <p>Classic samgyeopsal textures with crackle edges and juicy center.</p>
+            </div>
+          </a>
+          <a class="meat-card" href="#locations" aria-label="Seafood Selection card">
+            <img src="assets/ojingeo-gui.jpg" alt="Korean grilled seafood platter">
+            <div class="meat-content">
+              <h3>Seafood Selection</h3>
+              <p>Flame-charred ocean cuts balancing smoke, spice, and clean finish.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience-section section-shell" id="experience" aria-labelledby="experience-title">
+      <div class="container gallery-shell">
+        <div class="section-head">
+          <div>
+            <span class="kicker">The Experience</span>
+            <h2 class="display-heading" id="experience-title">Moments You Can Feel</h2>
+          </div>
+          <p>Scroll through the room energy: neon glow, wooden tables, red napkins, smoke trails, and loud laughter.</p>
+        </div>
+
+        <div class="gallery-track" aria-label="Scrollable atmosphere gallery">
+          <article class="gallery-card">
+            <img src="assets/springvale.jpg" alt="Dining room with warm red light and neon accents">
+            <div class="gallery-caption">
+              <h3>Neon Signs</h3>
+              <p>Color-rich walls and cinematic edge light pull guests into the room.</p>
+            </div>
+          </article>
+          <article class="gallery-card">
+            <img src="assets/doncaster.jpg" alt="Wooden Korean BBQ tables set for dinner">
+            <div class="gallery-caption">
+              <h3>Wooden Tables</h3>
+              <p>Grounded textures that keep every table social and inviting.</p>
+            </div>
+          </article>
+          <article class="gallery-card">
+            <img src="assets/banchan-set.jpg" alt="Red napkin beside Korean side dishes">
+            <div class="gallery-caption">
+              <h3>Red Napkins</h3>
+              <p>The visual signature placed in frame on every table setting.</p>
+            </div>
+          </article>
+          <article class="gallery-card">
+            <img src="assets/box-hill.jpg" alt="Smoke rising from table grill during service">
+            <div class="gallery-caption">
+              <h3>Grill Smoke</h3>
+              <p>Live smoke cues tell guests this is real heat, not staged dining.</p>
+            </div>
+          </article>
+          <article class="gallery-card">
+            <img src="assets/brimbank.jpg" alt="Group of diners sharing food and laughing">
+            <div class="gallery-caption">
+              <h3>Customers Laughing</h3>
+              <p>The atmosphere stays high-energy from first bite to final round.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="locations-section section-shell" id="locations" aria-labelledby="locations-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Locations</span>
+            <h2 class="display-heading" id="locations-title">Find Your Nearest BBQ-K</h2>
+          </div>
+          <p>Hybrid mode preview: branch names are real, map positions are placeholder markers ready for live coordinates.</p>
+        </div>
+
+        <div class="locations-layout">
+          <div class="chip-list" id="branchChips" aria-label="Branch list"></div>
+          <div class="map-stage" aria-label="Interactive branch map preview">
+            <div class="map-grid" aria-hidden="true"></div>
+            <svg class="map-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M8,72 C18,58 34,48 48,54 C65,60 72,40 92,28"></path>
+              <path d="M8,24 C20,34 36,26 52,22 C67,19 78,16 92,20"></path>
+            </svg>
+            <div class="map-markers" id="mapMarkers" aria-label="Branch markers"></div>
+            <article class="map-detail" id="mapDetail" aria-live="polite"></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="social-section section-shell" id="social" aria-labelledby="social-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="kicker">Social Feed</span>
+            <h2 class="display-heading" id="social-title">Built To Be Shared</h2>
+          </div>
+          <p>Instagram-style visual modules for reels, TikToks, and customer content, powered by reusable post data.</p>
+        </div>
+        <div class="social-grid" id="socialGrid" aria-label="Mock social feed cards"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-cta">
+    <p>BBQ-K - ALL YOU CAN EAT KOREAN BBQ DONE DIFFERENTLY</p>
+  </footer>
+
+  <script>
+    const branches = [
+      {
+        id: "springvale",
+        name: "Springvale",
+        mode: "AYCE",
+        top: 68,
+        left: 28,
+        hook: "Fast grills and family-size energy",
+        note: "Placeholder map pin. Replace with live coordinates in production."
+      },
+      {
+        id: "doncaster",
+        name: "Doncaster",
+        mode: "A La Carte",
+        top: 26,
+        left: 70,
+        hook: "Refined menu service with premium cuts",
+        note: "Placeholder map pin. Replace with live coordinates in production."
+      },
+      {
+        id: "endeavour-hill",
+        name: "Endeavour Hill",
+        mode: "AYCE",
+        top: 78,
+        left: 74,
+        hook: "Late-night flow and high-volume tables",
+        note: "Placeholder map pin. Replace with live coordinates in production."
+      },
+      {
+        id: "box-hill",
+        name: "Box Hill",
+        mode: "A La Carte",
+        top: 44,
+        left: 56,
+        hook: "Editorial plating and social-first atmosphere",
+        note: "Placeholder map pin. Replace with live coordinates in production."
+      },
+      {
+        id: "brimbank",
+        name: "Brimbank",
+        mode: "AYCE",
+        top: 54,
+        left: 15,
+        hook: "Big group bookings and weekend grill rush",
+        note: "Placeholder map pin. Replace with live coordinates in production."
+      }
+    ];
+
+    const socialPosts = [
+      {
+        type: "Reel",
+        metric: "312K views",
+        caption: "Flame drop at table 12. Shot, posted, replayed all night.",
+        image: "assets/galbi.jpg",
+        size: "large"
+      },
+      {
+        type: "TikTok",
+        metric: "88K likes",
+        caption: "The red napkin transition that everyone copies.",
+        image: "assets/banchan-set.jpg",
+        size: "small"
+      },
+      {
+        type: "Customer",
+        metric: "21K saves",
+        caption: "Date-night grill spread from Doncaster.",
+        image: "assets/doncaster.jpg",
+        size: "small"
+      },
+      {
+        type: "Reel",
+        metric: "127K views",
+        caption: "Pork belly crackle close-up at Springvale.",
+        image: "assets/samgyeopsal.jpg",
+        size: "small"
+      },
+      {
+        type: "TikTok",
+        metric: "166K views",
+        caption: "Smoke curtain reveal, then the first cut hits the grill.",
+        image: "assets/box-hill.jpg",
+        size: "large"
+      },
+      {
+        type: "Customer",
+        metric: "14K likes",
+        caption: "Brimbank weekend table takeover with six friends.",
+        image: "assets/brimbank.jpg",
+        size: "small"
+      }
+    ];
+
+    const branchChips = document.getElementById("branchChips");
+    const mapMarkers = document.getElementById("mapMarkers");
+    const mapDetail = document.getElementById("mapDetail");
+    const socialGrid = document.getElementById("socialGrid");
+
+    let activeBranchId = branches[0].id;
+
+    function detailMarkup(branch) {
+      return `
+        <p class="meta">${branch.mode}</p>
+        <h3>${branch.name}</h3>
+        <p>${branch.hook}</p>
+        <p>${branch.note}</p>
+      `;
+    }
+
+    function setActiveBranch(branchId) {
+      activeBranchId = branchId;
+      const selected = branches.find((branch) => branch.id === branchId);
+      if (!selected) return;
+
+      mapDetail.innerHTML = detailMarkup(selected);
+
+      const buttons = branchChips.querySelectorAll("button");
+      buttons.forEach((button) => {
+        button.classList.toggle("active", button.dataset.branchId === branchId);
+      });
+
+      const markers = mapMarkers.querySelectorAll("button");
+      markers.forEach((marker) => {
+        marker.classList.toggle("active", marker.dataset.branchId === branchId);
+      });
+    }
+
+    function renderLocations() {
+      branchChips.innerHTML = branches
+        .map(
+          (branch, index) => `
+            <button
+              type="button"
+              class="chip-button ${index === 0 ? "active" : ""}"
+              data-branch-id="${branch.id}"
+              aria-label="Show ${branch.name} details"
+            >
+              <span>${branch.name}</span>
+              <span class="mode ${branch.mode.toLowerCase().includes("ayce") ? "ayce" : ""}">${branch.mode}</span>
+            </button>
+          `
+        )
+        .join("");
+
+      mapMarkers.innerHTML = branches
+        .map(
+          (branch, index) => `
+            <button
+              type="button"
+              class="map-marker ${index === 0 ? "active" : ""}"
+              data-branch-id="${branch.id}"
+              style="top:${branch.top}%;left:${branch.left}%"
+              aria-label="Select ${branch.name}"
+            >
+              ${index + 1}
+            </button>
+          `
+        )
+        .join("");
+
+      setActiveBranch(activeBranchId);
+
+      branchChips.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-branch-id]");
+        if (!button) return;
+        setActiveBranch(button.dataset.branchId);
+      });
+
+      mapMarkers.addEventListener("click", (event) => {
+        const marker = event.target.closest("button[data-branch-id]");
+        if (!marker) return;
+        setActiveBranch(marker.dataset.branchId);
+      });
+    }
+
+    function renderSocial() {
+      socialGrid.innerHTML = socialPosts
+        .map(
+          (post) => `
+            <article class="social-card ${post.size}" tabindex="0" aria-label="${post.type} card">
+              <img src="${post.image}" alt="${post.caption}">
+              <div class="social-overlay">
+                <div class="social-top">
+                  <span class="social-pill">${post.type}</span>
+                  <span class="social-metric">${post.metric}</span>
+                </div>
+                <p class="social-caption">${post.caption}</p>
+              </div>
+            </article>
+          `
+        )
+        .join("");
+    }
+
+    renderLocations();
+    renderSocial();
+  </script>
+</body>
+</html>
